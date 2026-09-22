@@ -1,0 +1,125 @@
+/* ==========================================
+   FOOTER MODERNE – VERSION PROFESSIONNELLE
+========================================== */
+
+.app-footer {
+  width: 100%;
+  background: linear-gradient(
+    90deg,
+    #ffffff 0%,
+    #f0fdfa 100%
+  );
+  border-top: 1px solid #e5e7eb;
+  padding: 18px 32px;
+}
+
+/* Content container */
+.footer-content {
+  max-width: 1600px;
+  margin: 0 auto;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  font-size: 0.85rem;
+  color: #6b7280;
+}
+
+/* ================= LEFT ================= */
+
+.footer-left {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.brand {
+  font-weight: 600;
+  color: #0d9488;
+  letter-spacing: 0.3px;
+}
+
+.separator {
+  color: #cbd5e1;
+}
+
+.institution {
+  font-weight: 500;
+  color: #374151;
+}
+
+/* ================= CENTER ================= */
+
+.footer-center {
+  font-size: 1.2rem;
+  letter-spacing: 0.2px;
+}
+
+/* ================= RIGHT ================= */
+
+.footer-right {
+  font-size: 1.2rem;
+  color: #9ca3af;
+}
+
+/* ================= HOVER EFFECTS ================= */
+
+.brand:hover {
+  color: #0f766e;
+  transition: color 0.2s ease;
+}
+
+/* ================= RESPONSIVE ================= */
+
+@media (max-width: 900px) {
+  .footer-content {
+    flex-direction: column;
+    gap: 8px;
+    text-align: center;
+  }
+}
+
+footer {
+  height: 52px;
+
+  align-items: center;
+  justify-content: center;
+
+  background: linear-gradient(135deg, #0f172a, #1e293b);
+  color: #e2e8f0;
+
+  font-size: 0.9rem;
+  letter-spacing: 0.3px;
+
+  border-top: 1px solid rgba(255,255,255,0.05);
+
+  box-shadow: 0 -2px 10px rgba(0,0,0,0.15);
+
+  flex-shrink: 0;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
+}
+
+footer p {
+  margin: 0;
+}
+
+footer i {
+  color: #38bdf8;
+}
+
+.title span {
+  color: #0d9488;
+}
+
+.title {
+  font-family: "Inknut Antiqua", serif;
+  font-size: 1.4rem;
+  margin: 0;
+  font-weight: 500;
+  color: #1f2937;
+}

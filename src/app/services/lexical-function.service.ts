@@ -63,7 +63,7 @@ export class LexicalFunctionService {
     this.additionalPairsSubject.next([...currentPairs, {lexicalFunction, sense}]);
   }
 
-  createLexicalFunction(senseId: string, senseTarget: string, lexicalFunction: string, type: string): Observable<ILexicalFunction[]> {
+  createLexicalFunction(senseId: string | null, senseTarget: string, lexicalFunction: string, type: string): Observable<ILexicalFunction[]> {
     // ✅ Construct the payload based on the screenshot
     const updatePayload = {
       source: senseId,  // The source sense ID
@@ -81,7 +81,7 @@ export class LexicalFunctionService {
     };
 
     // ✅ Correctly format the request URL with query parameters
-    const requestUrl = `${this.CREATE_URL}?author=${prefixPayload.author}&desiredID=${prefixPayload.desiredID}&prefix=${prefixPayload.prefix}&baseIRI=${encodeURIComponent(prefixPayload.baseIRI)}`;
+    const requestUrl = `${this.CREATE_URL}?author=${prefixPayload.author}&desiredID=&prefix=${prefixPayload.prefix}&baseIRI=${encodeURIComponent(prefixPayload.baseIRI)}`;
 
     // ✅ Make the POST request with the correct payload and return a JSON response
     return this.http.post<ILexicalFunction[]>(requestUrl, updatePayload, {headers: {'Content-Type': 'application/json'}});

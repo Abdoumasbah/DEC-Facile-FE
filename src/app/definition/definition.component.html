@@ -1,0 +1,147 @@
+<div class="definition-card">
+
+  <!-- META ROW (POS) -->
+  <div class="definition-meta">
+    <img src="assets/logos/book.png" class="entry-book-icon" />
+    <span class="meta-label">{{ selectedEntryLabel }}</span>
+
+    <!-- SINGLE POS -->
+    <span *ngIf="!posSelectionRequired" class="meta-value">
+  {{ selectedPOSLabel }}
+</span>
+
+    <form [formGroup]="posForm">
+
+      <!-- MULTI POS -->
+      <p-dropdown
+        *ngIf="posSelectionRequired"
+        formControlName="pos"
+        [options]="posOptions"
+        placeholder="Select part of speech"
+        styleClass="meta-dropdown"
+        (onChange)="onPOSSelect($event)"
+      >
+        <ng-template pTemplate="item" let-pos>
+          {{ sharedFunctionModel.extractLabelFromURI(pos) }}
+        </ng-template>
+
+        <ng-template pTemplate="selectedItem" let-pos>
+          {{ sharedFunctionModel.extractLabelFromURI(pos) }}
+        </ng-template>
+      </p-dropdown>
+
+    </form>
+
+
+
+
+    <small
+      *ngIf="posSelectionRequired && !posSelected"
+      class="helper-text">
+      {{ posHelperMessage }}
+    </small>
+  </div>
+
+  <!-- DEFINITION -->
+  <div class="definition-body">
+
+    <label class="definition-label">Definition</label>
+
+    <div
+      class="definition-field"
+      [attr.contenteditable]="posSelected ? 'true' : null"
+      [class.disabled]="!posSelected"
+      [class.active]="posSelected"
+      [attr.data-placeholder]="
+    posSelected
+      ? 'Enter the definition'
+      : 'Select a part of speech to enable this field'
+  "
+      dir="auto"
+      (input)="posSelected && onDefinitionInput($event)"
+      (keydown)="posSelected && onKeyDown($event)"
+      #descriptionField>
+    </div>
+
+
+  </div>
+
+</div>
+
+
+<div class="modal" *ngIf="isModalOpen">
+  <div class="modal-content enhanced-modal sense-modal">
+
+    <button
+      type="button"
+      class="modal-close-button"
+      (click)="closeModal()">
+      &times;
+    </button>
+
+    <h2 class="modal-title">Add a sense</h2>
+
+    <!-- Sense Dropdown -->
+    <div class="modal-form-group">
+      <label class="modal-label">Select a sense</label>
+
+      <p-dropdown
+        [options]="senseOptions"
+        optionLabel="label"
+        optionValue="value"
+        placeholder="— Choose a sense —"
+        [filter]="true"
+        [showClear]="true"
+        filterMatchMode="startsWith"
+        styleClass="sense-dropdown"
+        (onChange)="onSenseSelectPrime($event)">
+      </p-dropdown>
+    </div>
+
+    <!-- Definition preview -->
+    <div class="modal-form-group">
+      <label class="modal-label">Definition preview</label>
+
+      <div
+        *ngIf="selectedDescription; else noDefinition"
+        class="modal-definition-box preview"
+        [innerHTML]="selectedDescription">
+      </div>
+
+      <ng-template #noDefinition>
+        <div class="modal-definition-box preview empty">
+          Select a sense to preview its definition
+        </div>
+      </ng-template>
+    </div>
+
+    <!-- Actions -->
+    <div class="modal-actions">
+      <button
+        class="modal-add-button"
+        [disabled]="!selectedSenseTag"
+        (click)="addSenseToDescription()">
+        Insert sense
+      </button>
+    </div>
+
+  </div>
+</div>
+
+
+<!-- Modal for Displaying Sense Definition -->
+<div class="modal" *ngIf="isDefinitionModalOpen">
+  <div class="modal-content modal-definition-view">
+    <button (click)="closeDefinitionModal()" class="modal-close-button">&times;</button>
+
+    <div class="modal-definition-box-content">
+      <label>Definition:</label>
+      <p [innerHTML]="selectedDefinitionModal"></p>
+    </div>
+
+    <div *ngIf="selectedExample" class="modal-example-box">
+      <label>Example:</label>
+      <em>{{ selectedExample }}</em>
+    </div>
+  </div>
+</div>

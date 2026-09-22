@@ -1,0 +1,112 @@
+
+/* ===== Tabs header ===== */
+.lexgov-tabs {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 80px;
+  padding: 14px 20px;
+  background-color: #f9fafb;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+/* ===== Tab item ===== */
+.lexgov-tab {
+  position: relative;
+  padding: 8px 18px;
+  cursor: pointer;
+
+  font-family: "Inknut Antiqua", serif;
+  font-size: 15px;
+  color: #6b7280; /* gray-500 */
+
+  transition: color 0.2s ease;
+}
+
+.lexgov-tab:hover{
+  background:#f1f5f9;
+}
+
+/* ===== Active tab ===== */
+.lexgov-tab.active {
+  color: #111827;
+  font-weight: 600;
+}
+
+/* underline animation */
+.lexgov-tab.active::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -14px;
+  width: 100%;
+  height: 3px;
+  border-radius: 3px;
+}
+
+/* ===== Content spacing ===== */
+.lexgov-content {
+  margin-top: 10px;
+}
+
+.lexgov-tab.disabled {
+  opacity: 0.4;
+  pointer-events: none;
+}
+
+.lexgov-card{
+  display:flex;
+  flex-direction:column;
+
+  gap:4px;
+
+  padding:10px 6px 10px 0;
+
+  min-width:200px;
+}
+
+.lexgov-tab{
+
+  display:flex;
+  align-items:center;
+
+  padding:8px 10px;
+
+  border-radius:6px;
+
+  font-size:13px;
+  font-weight:500;
+
+  color:#475569;
+
+  cursor:pointer;
+
+  transition:all .15s ease;
+}
+
+
+/* hover */
+
+.lexgov-tab:hover{
+  background:#eef2f7;
+}
+
+/* active */
+
+.lexgov-tab.active{
+  background:#e6fffa;
+  color:#0f766e;
+  font-weight:600;
+}
+
+.lexgov-title{
+  font-size:0.95rem;
+  text-transform:uppercase;
+  letter-spacing:0.08em;
+  color:#334155;
+  font-weight:600;
+  margin-bottom:12px;
+  padding-bottom:8px;
+
+  border-bottom:1px solid #e5e7eb;
+}

@@ -1,0 +1,486 @@
+/* ============================= */
+/* 🌍 GLOBAL CONTAINER */
+/* ============================= */
+
+.new-dict-container {
+  display: flex;
+  width: 100%;
+  background: #ffffff;
+  border-radius: 18px;
+  overflow: hidden;
+  box-shadow: 0 15px 40px rgba(0,0,0,0.06);
+}
+
+/* ============================= */
+/* 📚 LEFT PANEL (DICT LIST) */
+/* ============================= */
+
+.config-panel {
+  width: 270px;
+  padding: 1.5rem 1.2rem;
+
+  background: linear-gradient(to bottom, #fafafa, #f3f4f6);
+
+  border-right: 1px solid rgba(0,0,0,0.05);
+}
+
+/* TITLE */
+
+.config-title {
+  font-size: 1.2rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: #9ca3af;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+}
+
+/* SCROLL */
+
+.dict-scroll {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+/* ============================= */
+/* 🧩 DICT ITEM */
+/* ============================= */
+
+.dict-item {
+  margin-bottom: 6px;
+}
+
+/* HEADER ROW */
+
+.config-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  padding: 0.5rem 0.8rem;
+  border-radius: 999px;
+
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+/* hover */
+
+.config-item:hover {
+  background: #f1f5f9;
+  transform: translateX(2px);
+}
+
+/* active */
+
+.config-item.active {
+  background: linear-gradient(135deg, #0d9488, #0f766e);
+  color: white;
+
+  box-shadow:
+    0 6px 16px rgba(13,148,136,0.25),
+    inset 0 1px 0 rgba(255,255,255,0.2);
+}
+
+/* LEFT PART */
+
+.dict-item-left {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* ICON */
+
+.dict-item-left i {
+  font-size: 0.8rem;
+}
+
+/* ============================= */
+/* 🗑 DELETE ICON */
+/* ============================= */
+
+.delete-icon {
+  font-size: 0.75rem;
+  color: #ef4444;
+  opacity: 0;
+  transition: 0.2s;
+}
+
+.config-item:hover .delete-icon {
+  opacity: 1;
+}
+
+/* ============================= */
+/* 📂 SUBMENU */
+/* ============================= */
+
+.dict-submenu {
+  margin-top: 0.4rem;
+  margin-left: 1.3rem;
+  padding: 0.5rem;
+
+  border-radius: 12px;
+  background: #f8fafc;
+
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+
+  animation: slideDown 0.2s ease;
+}
+
+/* submenu item */
+
+.submenu-item {
+  font-size: 1.1rem;
+  padding: 0.35rem 0.5rem;
+  border-radius: 8px;
+  color: #6b7280;
+  transition: all 0.2s ease;
+}
+
+/* hover */
+
+.submenu-item:hover {
+  background: white;
+  transform: translateX(2px);
+  box-shadow: 0 3px 8px rgba(0,0,0,0.05);
+}
+
+/* active */
+
+.submenu-item.active {
+  background: linear-gradient(135deg, #d1fae5, #bbf7d0);
+  color: #065f46;
+  font-weight: 600;
+
+  box-shadow: 0 4px 10px rgba(16,185,129,0.15);
+}
+
+/* ============================= */
+/* 📦 RIGHT PANEL */
+/* ============================= */
+
+.form-panel {
+  flex: 1;
+  padding: 2rem 3rem;
+  background: #f9fafb;
+}
+
+
+
+/* ============================= */
+/* 🧾 HEADER */
+/* ============================= */
+
+.form-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.header-icon {
+  width: 46px;
+  height: 46px;
+  border-radius: 16px;
+
+  background: linear-gradient(135deg, #0d9488, #0f766e);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  color: white;
+
+  box-shadow:
+    0 10px 20px rgba(13,148,136,0.3),
+    inset 0 1px 0 rgba(255,255,255,0.3);
+}
+
+.form-header h2 {
+  margin: 0;
+  font-size: 1.8rem;
+  font-weight: 600;
+}
+
+.form-header p {
+  margin: 2px 0 0;
+  font-size: 1.2rem;
+  color: #6b7280;
+}
+
+/* ============================= */
+/* 🧱 FORM BODY */
+/* ============================= */
+
+.form-body {
+  display: flex;
+  flex-direction: column;
+  gap: 1.3rem;
+}
+
+/* FIELD */
+
+.field {
+  display: flex;
+  flex-direction: column;
+}
+
+/* LABEL */
+
+.field label {
+  font-size: 1.2rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: #9ca3af;
+  margin-bottom: 0.3rem;
+}
+
+/* INPUT */
+
+.field input,
+.field textarea {
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  padding: 0.6rem 0.9rem;
+
+  background: #f9fafb;
+
+  font-size: 1rem;
+  transition: all 0.2s ease;
+}
+
+/* focus */
+
+.field input:focus,
+.field textarea:focus {
+  outline: none;
+  background: white;
+  border-color: #0d9488;
+
+  box-shadow:
+    0 0 0 3px rgba(13,148,136,0.15),
+    0 5px 12px rgba(0,0,0,0.05);
+}
+
+/* ============================= */
+/* 🚀 ACTIONS */
+/* ============================= */
+
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+/* cancel */
+
+.cancel-btn {
+  background: none;
+  border: none;
+  color: #6b7280;
+  font-size: 1.2rem;
+  cursor: pointer;
+}
+
+/* save */
+
+.save-btn {
+  background: linear-gradient(135deg, #0d9488, #0f766e);
+  border: none;
+  color: white;
+
+  padding: 0.5rem 1.4rem;
+  border-radius: 999px;
+
+  font-size: 1.2rem;
+  font-weight: 600;
+
+  box-shadow: 0 6px 16px rgba(13,148,136,0.3);
+
+  transition: all 0.2s ease;
+}
+
+.save-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 24px rgba(13,148,136,0.4);
+}
+
+/* ============================= */
+/* 💤 EMPTY STATES */
+/* ============================= */
+
+.empty-left {
+  text-align: center;
+  color: #9ca3af;
+  margin-top: 1rem;
+  font-size: 0.8rem;
+}
+
+.empty-state {
+  text-align: center;
+  margin-top: 80px;
+  color: #9ca3af;
+}
+
+/* ============================= */
+/* 🎬 ANIMATIONS */
+/* ============================= */
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ============================= */
+/* 📱 RESPONSIVE */
+/* ============================= */
+
+@media (max-width: 1100px) {
+  .new-dict-container {
+    flex-direction: column;
+  }
+
+  .config-panel {
+    width: 100%;
+    border-right: none;
+    border-bottom: 1px solid #eee;
+  }
+}
+
+.config-panel {
+  height: 100%;
+  min-height: 100%;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+.new-dict-wrapper {
+  height: 100%;
+}
+
+.new-dict-container {
+  height: 100%;
+}
+
+.form-panel {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+}
+
+.form-panel > * {
+  width: 100%;
+}
+
+.config-panel {
+  position: relative;
+}
+
+.config-panel::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+
+  width: 1px;
+  height: 100%;
+
+  background: linear-gradient(
+    to bottom,
+    transparent,
+    rgba(0,0,0,0.05),
+    transparent
+  );
+}
+
+.config-item.active {
+  background: linear-gradient(135deg, #0d9488, #0f766e);
+
+  color: white;
+
+  box-shadow:
+    0 8px 20px rgba(13,148,136,0.3),
+    inset 0 1px 0 rgba(255,255,255,0.2);
+
+  transform: scale(1.02);
+}
+
+.config-item:hover {
+  background: linear-gradient(135deg, #0f766e, #0d9488);
+
+  color: white;
+
+  transform: translateX(2px);
+}
+
+
+.empty-state {
+  text-align: center;
+  margin-top: 120px;
+  color: #9ca3af;
+
+  font-size: 0.9rem;
+  letter-spacing: 0.02em;
+}
+
+.dict-scroll::-webkit-scrollbar {
+  display: none;
+}
+
+.new-dict-container {
+  display: flex;
+  width: 100%;
+  height: 100%;
+
+  background: #f3f4f6; /* gris global */
+  border-radius: 18px;
+  overflow: hidden;
+
+  box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+}
+
+.form-panel {
+  flex: 1;
+
+  background: white; /* ⚡ direct white */
+
+  padding: 2rem 3rem;
+}
+
+.form-header {
+  margin-bottom: 2rem;
+}
+
+.form-panel {
+  position: relative;
+}
+
+.form-panel::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+
+  width: 1px;
+  height: 100%;
+
+  background: #e5e7eb;
+}
+
+.dict-label{
+  font-size: 1.2rem;
+}

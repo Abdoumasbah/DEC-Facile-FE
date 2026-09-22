@@ -1,31 +1,377 @@
-<ul>
-  <li (click)="loadDetails()">
-    {{ dictEntry.label }} <sub>{{ dictEntry.pos }}</sub> &#64;{{ dictEntry.language }}
-  </li>
-  <div *ngIf="detailedEntry as entry" >
-    <ul>
-      <li>
-        Forms:
-        <ul *ngIf="forms.length > 0">
-          <div *ngFor="let form of forms">
-            <div *ngIf="form.label">
-              <li>
-                {{ form.label }} ({{ sharedFunctionModel.extractLabelFromURI(form.pos) }})
+<div class="actions-toolbar">
+  <button pButton label="Add DEC" icon="pi pi-plus"
+          class="p-button-sm action-btn"
+          (click)="displayPartChange.emit('newD')"></button>
+
+  <button pButton label="Import" icon="pi pi-file-import"
+          class="p-button-sm action-btn" [disabled]="true"></button>
+
+  <button pButton label="Export" icon="pi pi-file-export"
+          class="p-button-sm action-btn" [disabled]="true"></button>
+
+  <button
+    pButton
+    type="button"
+    label="List"
+    icon="pi pi-list"
+    class="p-button-sm action-btn"
+    (click)="displayPartChange.emit('listD')">
+  </button>
+</div>
+
+<div class="search-container">
+
+  <!-- Refresh -->
+  <button pButton
+          type="button"
+          icon="pi pi-refresh"
+          [loading]="loading"
+          class="search-icon-btn refresh-btn"
+          (click)="loadAllEntries()"
+          pTooltip="Refresh"
+          tooltipStyleClass="custom-tooltip"
+          tooltipPosition="bottom">
+  </button>
+
+  <!-- Input -->
+  <form [formGroup]="searchTextForm" autocomplete="off" class="search-form">
+    <span class="pi pi-search search-icon"></span>
+    <input
+      type="text"
+      formControlName="search"
+      placeholder="Search dictionaries..."
+      pInputText
+      class="search-input"/>
+  </form>
+
+  <!-- Reset -->
+  <button pButton
+          type="button"
+          icon="pi pi-times"
+          class="search-icon-btn reset-btn"
+          (click)="resetFilters()"
+          pTooltip="Reset"
+          tooltipStyleClass="custom-tooltip"
+          tooltipPosition="bottom">
+  </button>
+
+  <!-- Counter -->
+  <span class="search-counter">
+    {{ counter }}
+  </span>
+
+</div>
+
+<!-- ✅ Filters Panel -->
+<form autocomplete="off" [formGroup]="filtersForm">
+  <p-panel iconPos="start"
+           [header]="'Filters'"
+           [toggleable]="true"
+           [collapsed]="true"
+           styleClass="p-3">
+
+
+    <div class="match-type-container">
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-2">
+
+        <button
+          *ngFor=" let match of matchRadioGroup"
+          type="button"
+          class="match-button"
+          [ngClass]="{
+        'active': filtersForm.get('match')?.value === match.key
+      }"
+          (click)="filtersForm.get('match')?.setValue(match.key)"
+        >
+          {{ match.name }}
+        </button>
+      </div>
+    </div>
+
+
+    <!-- ✅ Language & Editor Dropdowns -->
+    <div class="grid grid-cols-2 gap-x-4 gap-y-2 mb-3">
+      <div class="w-full">
+        <p-dropdown
+          [options]="languages"
+          optionLabel="label"
+          formControlName="language"
+          [showClear]="true"
+          [placeholder]="'Language'"
+          styleClass="w-full block">
+        </p-dropdown>
+      </div>
+
+      <div class="w-full">
+        <p-dropdown
+          [options]="[]"
+          formControlName="editor"
+          filterBy="label"
+          [showClear]="true"
+          [filter]="true"
+          [placeholder]="'Editor'"
+          styleClass="w-full block"
+        >
+        </p-dropdown>
+      </div>
+    </div>
+
+    <!-- ✅ Status Dropdown -->
+    <div class="w-full">
+      <p-dropdown
+        [options]="statuses"
+        optionLabel="label"
+        formControlName="status"
+        [showClear]="true"
+        [placeholder]="'Status'"
+        styleClass="w-full"
+      >
+      </p-dropdown>
+    </div>
+  </p-panel>
+</form>
+
+<div class="entry-list">
+
+  <div *ngFor="let node of entryNodes" class="entry-wrapper">
+    <div class="entry-row" (click)="onEntryClick(node)">
+      <div class="entry-main w-3/5">
+      <span class="entry-label fw-bold">
+        <i class="pi pi-user" *ngIf="node.data?.creator"
+           [pTooltip]="
+                 '<i>Editor:</i> <b>' + node.data?.creator + '</b><br>' +
+                 '<i>Creation date:</i> ' + (node.data?.creationDate | date:'mediumDate') + '<br>' +
+                 '<i>Last update:</i> ' + (node.data?.lastUpdate | date:'mediumDate')
+               "
+           tooltipPosition="right"
+           tooltipStyleClass="custom-tooltip"
+           [escape]="false" style="margin-right: 15px"></i>
+        {{ node.data?.label }}
+        <sub class="entry-pos italic">&#64;{{ node.data?.language }}</sub>
+        ({{ node.data?.pos }})
+
+      </span>
+      </div>
+
+      <div class="entry-icons w-2/5 justify-end">
+        <button pButton pRipple icon="pi pi-eye" class="p-button-rounded p-button-sm p-button-primary"
+                pTooltip="View" tooltipPosition="right"
+                tooltipStyleClass="custom-tooltip"
+                (click)="entryViewRequested.emit(node.data?.dictionaryEntry); $event.stopPropagation()"
+        ></button>
+        <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-sm p-button-primary"
+                pTooltip="Edit" tooltipPosition="right"
+                tooltipStyleClass="custom-tooltip"
+                (click)="editEntry(node.data?.dictionaryEntry); $event.stopPropagation()"
+        ></button>
+
+        <i class="pi pi-lock-open" *ngIf="node.data?.status === 'working'" style="color: red;"
+           (click)="updateStatus(node.data?.dictionaryEntry,node.data?.status); $event.stopPropagation()"
+           pTooltip="{{node.data?.status}}" tooltipPosition="right"
+           tooltipStyleClass="custom-tooltip"></i>
+        <i class="pi pi-lock" *ngIf="node.data?.status === 'completed'" style="color: goldenrod;"
+           (click)="updateStatus(node.data?.dictionaryEntry,node.data?.status); $event.stopPropagation()"
+           pTooltip="{{node.data?.status}}" tooltipPosition="right"
+           tooltipStyleClass="custom-tooltip"></i>
+        <i class="pi pi-lock" *ngIf="node.data?.status === 'reviewed'" style="color: green;"
+           (click)="updateStatus(node.data?.dictionaryEntry,node.data?.status); $event.stopPropagation()"
+           pTooltip="{{node.data?.status}}" tooltipPosition="right"
+           tooltipStyleClass="custom-tooltip"></i>
+        <!--        <button pButton pRipple icon="pi pi-plus" class="p-button-rounded p-button-sm p-button-primary"
+                        pTooltip="Add Lexical Entry" tooltipPosition="right"
+                        tooltipStyleClass="custom-tooltip" [disabled]="true"
+                ></button>-->
+
+        <button class="btn btn-outline-primary rounded-circle mx-2"
+                pTooltip="Delete selected" tooltipPosition="right"
+                tooltipStyleClass="custom-tooltip"
+                (click)="deleteEntry(selectedEntryId!)">
+          <i class="pi pi-trash"></i>
+        </button>
+
+      </div>
+
+    </div>
+    <div class="entry-wrapper" *ngIf="node.data?.dictionaryEntry === selectedEntryId">
+
+      <!-- FORMS TOGGLE -->
+      <div class="flex gap-3 mb-2 items-center cursor-pointer hover:text-primary"
+           (click)="toggleForms(selectedEntryId); $event.stopPropagation()">
+        <i class="pi" [ngClass]="expandedSections[selectedEntryId]?.forms ? 'pi-angle-down' : 'pi-angle-right'"></i>
+        <div class="entry-main w-3/5">
+          <span class="font-black text-lg flex items-center gap-2">
+            Forms
+            <span class="count-badge">{{ formsCount }}</span>
+          </span>
+
+        </div>
+        <div class="entry-icons w-2/5 justify-end">
+          <button pButton pRipple icon="pi pi-plus" class="p-button-rounded p-button-sm p-button-primary"
+                  pTooltip="Add Form" tooltipPosition="right"
+                  tooltipStyleClass="custom-tooltip"
+                  (click)="onAddFormClick($event)">
+          </button>
+        </div>
+      </div>
+      <div class="flex gap-3 mb-2">
+        <div class="entry-section entry-section--forms"
+             *ngIf="expandedSections[selectedEntryId]?.forms">
+          <div class="text-lg font-semibold text-gray-700 mb-1"></div>
+          <ul *ngIf="forms.length > 0" class="form-list">
+            <div *ngFor="let form of forms">
+              <li *ngIf="form.label" class="form-item">
+                <div class="form-row">
+
+      <span class="form-label" *ngIf="form.type == 'http://www.w3.org/ns/lemon/ontolex#canonicalForm'">
+        <b>
+            {{ sharedFunctionModel.extractLangFromLabel(form.label) }}
+          ({{ sharedFunctionModel.extractLabelFromURI(form.pos) }})
+        </b>
+      </span>
+                  <span class="form-label" *ngIf="form.type == 'http://www.w3.org/ns/lemon/ontolex#otherForm'">
+            {{ sharedFunctionModel.extractLangFromLabel(form.label) }}
+                    ({{ sharedFunctionModel.extractLabelFromURI(form.pos) }})
+      </span>
+
+                  <div class="item-actions">
+                    <button
+                      class="btn btn-outline-primary rounded-circle icon-pencil"
+                      pTooltip="update form" tooltipStyleClass="custom-tooltip"
+                      (click)="$event.stopPropagation(); editForm(form.form)">
+                      <i class="pi pi-pencil"></i>
+                    </button>
+
+                    <button
+                      class="btn btn-outline-primary rounded-circle icon-trash"
+                      pTooltip="Delete form" tooltipStyleClass="custom-tooltip"
+                      (click)="$event.stopPropagation(); deleteForm(form.form)">
+                      <i class="pi pi-trash"></i>
+                    </button>
+                  </div>
+                </div>
               </li>
             </div>
-          </div>
-        </ul>
-      </li>
-    </ul>
-    <ul>
-      <li>Senses :</li>
-      <ul>
-        <ul *ngIf="entries">
-          <li *ngFor="let sense of entries" (click)="setSelectedSense(sense)">
-            {{ sense.label }}
-          </li>
-        </ul>
-      </ul>
-    </ul>
+          </ul>
+
+        </div>
+      </div>
+
+      <!-- SENSES TOGGLE -->
+      <div class="flex gap-3 mb-2 items-center cursor-pointer hover:text-primary"
+           (click)="toggleSenses(selectedEntryId); $event.stopPropagation()">
+        <i class="pi" [ngClass]="expandedSections[selectedEntryId]?.senses ? 'pi-angle-down' : 'pi-angle-right'"></i>
+        <div class="entry-main w-3/5">
+          <span class="font-black text-lg flex items-center gap-2">
+  Senses
+  <span class="count-badge">{{ sensesCount }}</span>
+</span>
+        </div>
+        <div class="entry-icons w-2/5 justify-end">
+          <button pButton pRipple icon="pi pi-plus" class="p-button-rounded p-button-sm p-button-primary"
+                  pTooltip="Add Sense" tooltipPosition="right"
+                  tooltipStyleClass="custom-tooltip"
+                  (click)="onAddSenseClick($event)">
+          </button>
+          <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-sm p-button-primary"
+                  pTooltip="order of sense" tooltipPosition="right"
+                  tooltipStyleClass="custom-tooltip"
+                  (click)="openSenseOrder(); $event.stopPropagation()">
+          </button>
+          <!--<button pButton pRipple icon="pi pi-plus" class="p-button-rounded p-button-sm p-button-primary"
+                  pTooltip="Add Sense" tooltipPosition="right"
+                  tooltipStyleClass="custom-tooltip" (click)="displayPartChange.emit('newSense')"
+          ></button>-->
+        </div>
+      </div>
+      <div class="flex gap-3 mb-2">
+        <div class="entry-section entry-section--senses"
+             *ngIf="expandedSections[selectedEntryId]?.senses">
+          <div class="text-lg font-semibold text-gray-700 mb-1"></div>
+          <ul *ngIf="entries" class="sense-list">
+            <li *ngFor="let sense of entries"
+                class="sense-item"
+                (click)="setSelectedSense(sense); displayPartChange.emit('Sense'); $event.stopPropagation()">
+              <div class="sense-row">
+                  <span class="sense-label">
+                    {{ sense.label }}
+                    <span class="sense-pos">({{ sense.pos }})</span>
+                  </span>
+
+                <div class="item-actions">
+                  <button
+                    class="btn btn-outline-primary rounded-circle icon-trash"
+                    pTooltip="Delete sense" tooltipStyleClass="custom-tooltip"
+                    (click)="$event.stopPropagation(); deleteSense(sense.referredEntity)">
+                    <i class="pi pi-trash"></i>
+                  </button>
+                </div>
+              </div>
+              <div class="sense-definition"
+                   [innerHTML]="sense.definition.substring(0,50)">
+              </div>
+
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
   </div>
-</ul>
+</div>
+<!-- ADD DICT ENTRY BUTTON -->
+<div class="add-entry-container">
+  <button pButton
+          label="Add DEC Entry"
+          icon="pi pi-plus"
+          class="p-button-sm action-btn add-entry-btn"
+          (click)="displayPartChange.emit('newDE')">
+  </button>
+</div>
+<p-dialog
+  header="List of Dictionary"
+  [(visible)]="showDictDeleteDialog"
+  [modal]="true"
+  [draggable]="false"
+  [resizable]="false"
+  styleClass="dict-delete-dialog"
+  [breakpoints]="{'960px':'60vw','640px':'80vw'}"
+  [style]="{width:'40vw'}">
+
+  <ng-container *ngIf="!loadingDicts; else dictsLoading">
+    <ng-container *ngIf="dicts?.length; else noDicts">
+      <div class="dict-list">
+        <div class="dict-row" *ngFor="let d of dicts; trackBy: trackByDict">
+          <div class="dict-info">
+            <div class="dict-label">{{ d.label }}</div>
+            <small class="dict-lang" *ngIf="d.language">
+              {{ d.language }} (entries: {{ d.entries }})
+            </small>
+          </div>
+          <div>
+            <button pButton type="button" icon="pi pi-pencil"
+                    class="p-button-text p-button-danger"
+                    (click)="editDictionary(d.dictionary)"></button>
+            <button pButton type="button" icon="pi pi-trash"
+                    class="p-button-text p-button-danger"
+                    (click)="confirmDeleteDictionary(d)"></button>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+    <ng-template #noDicts>
+      <div class="muted center">No dictionaries found.</div>
+    </ng-template>
+  </ng-container>
+
+  <ng-template #dictsLoading>
+    <div class="center muted">
+      <i class="pi pi-spin pi-spinner" style="margin-right:.5rem"></i> Loading…
+    </div>
+  </ng-template>
+</p-dialog>
+<p-confirmDialog
+  key="deleteDialog"
+  styleClass="custom-confirm-dialog"
+  [blockScroll]="true"
+  [closable]="false">
+</p-confirmDialog>
+<p-toast></p-toast>

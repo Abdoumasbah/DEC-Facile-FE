@@ -6,7 +6,7 @@ import {LanguageService} from '../services/language.service';
   selector: 'app-search',
   templateUrl: './search.component.html',
   standalone: false,
-  styleUrls: ['./search.component.scss']
+  styleUrls: ['./search.component.css']
 })
 export class SearchComponent {
 

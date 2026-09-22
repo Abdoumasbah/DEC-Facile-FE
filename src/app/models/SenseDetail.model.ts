@@ -15,6 +15,7 @@ export class SenseDetail implements ISenseDetail {
   links: Array<{ type: string; elements: ILinkElement[] }> = [];
   note: string = '';
   concept: string = '';
+  language: string= '';
   description: string | null = null;
   explanation: string | null = null;
   gloss: string | null = null;
@@ -45,6 +46,7 @@ export class SenseDetail implements ISenseDetail {
       })),
       note: this.note,
       concept: this.concept,
+      language: this.language,
       description: this.description,
       explanation: this.explanation,
       gloss: this.gloss,

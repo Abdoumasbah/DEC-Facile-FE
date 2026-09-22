@@ -1,0 +1,175 @@
+<div class="sense-order-wrapper">
+
+  <p-table [value]="rows" class="mb-4">
+
+    <ng-template pTemplate="header">
+      <tr>
+        <th>Definition</th>
+        <th class="text-center">Level I</th>
+        <th class="text-center">Level 1</th>
+        <th class="text-center">Level a</th>
+      </tr>
+    </ng-template>
+
+    <ng-template pTemplate="body" let-row>
+
+      <!-- ===== LIGNE NORMALE (Level I seulement) ===== -->
+      <tr *ngIf="!row.isContainer" (click)="selectRow(row)" class="cursor-pointer">
+        <td class="definition-cell">
+          <div class="move-buttons">
+            <button
+              pButton
+              icon="pi pi-chevron-up"
+              class="p-button-text p-button-sm"
+              *ngIf="row.index! > 0"
+              (click)="moveRowUp(row, $event)">
+            </button>
+
+            <button
+              pButton
+              icon="pi pi-chevron-down"
+              class="p-button-text p-button-sm"
+              *ngIf="row.index! < rows.length - 1"
+              (click)="moveRowDown(row, $event)">
+            </button>
+          </div>
+
+          <div [innerHTML]="row.definition"></div>
+        </td>
+
+        <!-- Level I -->
+        <td class="text-center level-i">
+          {{ row.levelI }}
+          <button
+            *ngIf="row.index! > 0"
+            pButton
+            icon="pi pi-minus"
+            class="p-button-text p-button-sm"
+            (click)="lowerFromLevelI(row.index!)">
+          </button>
+        </td>
+
+        <!-- Level 1 -->
+        <td class="text-center">
+          —
+        </td>
+
+        <!-- Level a -->
+        <td class="text-center">
+          —
+        </td>
+      </tr>
+
+      <!-- ===== CONTENEUR (Level 1 / a-b-c) ===== -->
+      <ng-container *ngIf="row.isContainer">
+        <tr *ngFor="let child of row.children"
+            (click)="selectRow(child)"
+            class="cursor-pointer">
+
+          <td class="pl-6 definition-cell">
+            <div class="move-buttons">
+              <button
+                pButton
+                icon="pi pi-chevron-up"
+                class="p-button-text p-button-sm"
+                *ngIf="canMoveUp(child)"
+                (click)="moveChildUp(row, child, $event)">
+              </button>
+
+              <button
+                pButton
+                icon="pi pi-chevron-down"
+                class="p-button-text p-button-sm"
+                *ngIf="canMoveDown(child)"
+                (click)="moveChildDown(row, child, $event)">
+              </button>
+
+
+            </div>
+
+
+            <div [innerHTML]="child.definition"></div>
+          </td>
+
+          <!-- Level I -->
+          <td class="text-center level-1">
+            {{ child.levelI }}
+          </td>
+
+          <!-- Level 1 -->
+          <td class="text-center font-semibold">
+            <div class="level-inline">
+              <span class="level-value">{{ child.level1 }}</span>
+
+              <div class="level-vertical-buttons">
+                <button
+                  *ngIf="row.isContainer && isLastLevel1(child, row)"
+                  pButton
+                  icon="pi pi-plus"
+                  class="p-button-text p-button-sm"
+                  (click)="raiseFromLevel1(child)">
+                </button>
+
+                <button
+                  *ngIf="!child.levelA && child.level1 !== undefined && child.level1 > 1"
+                  pButton
+                  icon="pi pi-minus"
+                  class="p-button-text p-button-sm"
+                  (click)="lowerFromLevel1(child)">
+                </button>
+              </div>
+            </div>
+          </td>
+
+
+          <!-- Level a -->
+          <td class="text-center level-a">
+          {{ child.levelA ?? '—' }}
+
+            <button
+              *ngIf="row.isContainer && isLastLetter(child, row)"
+              pButton
+              icon="pi pi-plus"
+              class="p-button-text p-button-sm"
+              (click)="raiseFromLevelA(child)">
+            </button>
+          </td>
+
+        </tr>
+      </ng-container>
+
+    </ng-template>
+
+  </p-table>
+  <!-- ===== GLOBAL SENSE VIEW ===== -->
+  <div class="sense-preview">
+
+    <div class="sense-preview-title">
+      Current sense structure
+    </div>
+
+    <div *ngFor="let item of flatView" class="sense-preview-item">
+      <div class="sense-preview-label">
+        {{ item.label }}
+      </div>
+      <div
+        class="sense-preview-definition"
+        [innerHTML]="item.definition">
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ACTION BAR -->
+  <div class="sense-actions">
+    <button
+      pButton
+      type="button"
+      label="Save"
+      icon="pi pi-save"
+      class="save-btn">
+    </button>
+  </div>
+
+
+</div>

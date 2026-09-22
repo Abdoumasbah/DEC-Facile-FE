@@ -1,0 +1,27 @@
+<form [formGroup]="sense" (ngSubmit)="saveNewMeanings('aaa')">
+
+  <div style="display: flex">
+
+    <div class="card tableScrollHeight">
+
+      <!-- POS -->
+      <div class="header-container">
+        <p class="text italic left-text">POS*</p>
+        <p-dropdown
+          [options]="posOptions"
+          optionLabel="label"
+          formControlName="pos"
+          [showClear]="true"
+          [filter]="true"
+          [placeholder]="'Select POS'"
+          styleClass="w-full block p-select">
+        </p-dropdown>
+      </div>
+
+      <div class="justify-end">
+        <button pButton type="submit" label="Save"></button>
+      </div>
+
+    </div>
+  </div>
+</form>

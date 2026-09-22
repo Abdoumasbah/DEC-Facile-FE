@@ -1,0 +1,72 @@
+<div style="display: flex; justify-content: center">
+  <div class="card text-left w-full tableScrollHeight">
+    <div class="flex">
+      <span class="font-semibold text-gray-700 uppercase">{{ dictEntry.label }}</span>
+      <span *ngIf="countPosSense == 1 ">, {{ this.pos }} </span>
+    </div>
+    <!-- 🔠 Forms Section -->
+    <div *ngIf="hasLabeledForms" class="entry-main mb-3 flex">
+      <div class="ml-5 mt-2 list-disc text-base text-gray-800" *ngFor="let form of forms">
+
+        <span class="font-medium">{{ sharedFunctionModel.extractLangFromLabel(form.label) }} </span>
+        <span class="italic text-sm text-gray-600"
+              *ngIf="countPosSense != 1">({{ sharedFunctionModel.extractLabelFromURI(form.pos) }})</span>
+
+      </div>
+    </div>
+
+    <!-- 📚 Senses Definition -->
+    <div *ngIf="senses.length > 0">
+      <ul class="ml-4">
+        <li *ngFor="let sense of senses">
+          <!-- 🔹 Sense Label + Definition -->
+          <div>
+            <b class="text font-semibold text-indigo-800">{{ sense.label }}.</b>
+            <span class="ml-2 text leading-relaxed" *ngIf="countPosSense != 1">({{ sense.pos }})</span>
+            <span class="ml-2 text leading-relaxed" [innerHTML]="updateDefinition(sense.definition)"></span>
+          </div>
+        </li>
+      </ul>
+    </div>
+
+    <hr class="custom-divider" *ngIf="hasLabeledForms && senses.length > 0">
+
+    <!-- 📚 Senses Section -->
+    <div *ngIf="senses.length > 0">
+      <ul class="ml-4">
+        <li *ngFor="let sense of senses" class="mb-3">
+          <!-- 🔹 Sense Label + Definition -->
+          <div *ngIf="lexicalFunctions[sense.referredEntity]?.length || examples[sense.referredEntity]">
+            <b class="text font-semibold text-indigo-800">{{ sense.label }}.</b>
+            <span class="ml-2 text leading-relaxed" *ngIf="countPosSense != 1">({{ sense.pos }})</span>
+            <span class="ml-2 text leading-relaxed" [innerHTML]="updateDefinition(sense.definition)"></span>
+          </div>
+
+          <!-- 🔁 Lexical Functions -->
+          <div *ngIf="lexicalFunctions[sense.referredEntity]?.length" class="ml-5">
+            <span class="font-semibold text-gray-700">Lexical Functions:</span>
+            <div *ngFor="let lfType of lexicalFunctions[sense.referredEntity]
+                    ? Object.keys(groupLexicalFunctions(lexicalFunctions[sense.referredEntity]))
+                    : []" class="text-sm text-gray-800 mb-1 ml-4">
+              <span class="font-medium text text-purple-700">{{ lfType }}:</span>
+              <span
+                *ngFor="let lf of groupLexicalFunctions(lexicalFunctions[sense.referredEntity])[lfType]; let last = last">
+    <span class="italic text">
+      {{ sharedFunctionModel.extractLangFromLabel(ecdMeanings[lf.senseTarget].label) || '...' }}
+      {{ ecdMeanings[lf.senseTarget]?.senseLabel || '...' }}
+    </span><span *ngIf="!last">, </span>
+  </span>
+            </div>
+          </div>
+
+          <!-- 💬 Example -->
+          <div *ngIf="examples[sense.referredEntity]" class="ml-5 flex flex-col">
+            <span class="font-semibold text-gray-700 ">Example:</span>
+            <span class="ml-2 italic text text-gray-600" [innerHTML]="examples[sense.referredEntity]"></span>
+          </div>
+        </li>
+      </ul>
+    </div>
+
+  </div>
+</div>

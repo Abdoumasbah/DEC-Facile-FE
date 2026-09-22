@@ -1,0 +1,238 @@
+#card_label {
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  margin: 25px;
+  width : 50%;
+  border-radius: 10px;
+  box-shadow: 5px 5px 10px 0 gray;
+  background-color: rgb(245, 245, 245);
+  align-items: center;
+}
+
+.card_lang {
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  margin: 25px;
+  width : 25%;
+  border-radius: 10px;
+  box-shadow: 5px 5px 10px 0 gray;
+  background-color: rgb(245, 245, 245);
+  align-items: center;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  margin: 0px 25px 25px 25px;
+  border-radius: 10px;
+  box-shadow: 5px 5px 10px 0 gray;
+  background-color: rgb(245, 245, 245);
+  align-items: center;
+  gap: 20px;
+  width: 100%;
+}
+
+.tableScrollHeight {
+  height: auto;
+  max-height: calc(94vh - 100px); /* adjust dynamically with header */
+  /*overflow-y: auto;*/
+}
+
+.left-text{
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  width: 8%;
+}
+
+.card_type {
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  margin: 25px;
+  border-radius: 10px;
+  box-shadow: 5px 5px 10px 0 gray;
+  background-color: rgb(245, 245, 245);
+  align-items: center;
+  width : 25%
+}
+
+.header-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  gap: 10px;
+  flex-wrap: nowrap; /* Empêche les éléments de passer à la ligne */
+}
+.header-container-type {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  gap: 10px;
+  flex-wrap: nowrap; /* Empêche les éléments de passer à la ligne */
+}
+
+.content-container {
+  display: flex;
+  width: 100%;
+  margin-top: 10px;
+  gap: 10px;
+}
+
+.input_description {
+  flex-grow: 1;
+  /*margin: 0 10px;*/
+  background-color: white;
+  border-radius: 10px;
+  height: 50px;
+  padding: 5px;
+  border: 1px solid #ccc;
+  overflow-y: auto; /* Allow vertical scroll */
+  word-wrap: break-word; /* Break long words */
+  white-space: pre-wrap; /* Maintain spaces and line breaks */
+
+}
+
+/* Wrapper */
+:host ::ng-deep .p-dropdown {
+  width: 100%;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+  background-color: white;
+  min-height: 40px;
+}
+
+:host ::ng-deep .p-select {
+  margin: 0 0 0 6px;
+  padding: 10px;
+}
+
+/* Dropdown label (selected value) */
+:host ::ng-deep .p-dropdown-label {
+  padding: 0.5rem 1rem;
+  color: #374151; /* Tailwind gray-700 */
+}
+
+/* Dropdown panel */
+:host ::ng-deep .p-dropdown-panel {
+  border-radius: 10px;
+  border: 1px solid #ccc;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+  padding: 0.25rem 0;
+}
+
+/* Dropdown items */
+:host ::ng-deep .p-dropdown-item {
+  padding: 0.5rem 1rem;
+  transition: all 0.2s ease-in-out;
+  font-size: 0.95rem;
+  color: #374151;
+  border-radius: 6px;
+  margin: 2px 6px;
+}
+
+/* Hover effect */
+:host ::ng-deep .p-dropdown-item:hover {
+  background-color: #e0f2f1;
+  color: #0f766e;
+}
+
+/* Selected item */
+:host ::ng-deep .p-dropdown-item.p-highlight {
+  background-color: #0d9488 !important;
+  color: #fff !important;
+  font-weight: bold;
+}
+
+/* Icon padding fix */
+:host ::ng-deep .p-dropdown .p-dropdown-trigger {
+  padding: 0 0.5rem;
+}
+
+/* Clear icon */
+:host ::ng-deep .p-dropdown-clear-icon {
+  right: 2rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #6b7280;
+  cursor: pointer;
+}
+
+/* Scrollbar */
+:host ::ng-deep .p-dropdown-items-wrapper {
+  max-height: 250px;
+  overflow-y: auto;
+}
+
+/* ✅ Dropdown Panel */
+:host ::ng-deep .p-select-overlay {
+  background-color: #f9fafb;
+  border-radius: 10px;
+  border: 1px solid #d1d5db;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+  padding: 0.25rem 0;
+  padding-left: 2%;
+  gap: 10px;
+}
+
+/* ✅ Items */
+:host ::ng-deep .p-select .p-select-item {
+  padding: 0.6rem 1rem;
+  font-size: 0.9rem;
+  transition: background 0.2s ease-in-out, color 0.2s ease-in-out;
+  border-radius: 6px;
+  margin: 2px 6px;
+}
+
+/* ✅ Hover effect */
+:host ::ng-deep .p-select .p-select-item:hover {
+  background-color: #e0f2f1;
+  color: #0f766e;
+}
+
+/* ✅ Selected item */
+:host ::ng-deep .p-select .p-select-item.p-highlight {
+  background-color: #0d9488 !important;
+  color: #ffffff !important;
+  font-weight: 600;
+}
+
+/* ✅ Scrollbar for dropdown */
+:host ::ng-deep .p-select-items-wrapper {
+  scrollbar-width: thin;
+  scrollbar-color: #94a3b8 #f3f4f6;
+}
+:host ::ng-deep .p-select-items-wrapper::-webkit-scrollbar {
+  width: 6px;
+}
+:host ::ng-deep .p-select-items-wrapper::-webkit-scrollbar-thumb {
+  background-color: #94a3b8;
+  border-radius: 4px;
+}
+
+:host ::ng-deep .p-select-clear-icon {
+  display: flex !important;
+  padding: 10px;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  right: 2.5rem; /* place nicely to the right of label */
+  top: 50%;
+  transform: translateY(-50%);
+  color: #6b7280; /* Tailwind gray-500 */
+  font-size: 1rem;
+  opacity: 0.9;
+  cursor: pointer;
+  transition: color 0.2s ease-in-out, opacity 0.2s ease-in-out;
+}
+
+:host ::ng-deep .p-select-clear-icon:hover {
+  color: #dc2626; /* red on hover */
+  opacity: 1;
+}
+

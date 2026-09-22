@@ -1,0 +1,382 @@
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 64px;                 /* 👈 fixe la hauteur */
+  padding: 0 2rem;              /* 👈 enlève padding vertical */
+  border-bottom: 1px solid #e5e7eb;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+  width: 100%;
+  margin-bottom: 0;
+}
+
+/* LEFT */
+
+.navbar-left {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.logo {
+  width: 34px;
+  height: 34px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  color: white;
+  font-size: 1rem;
+}
+
+.title {
+  font-family: "Inknut Antiqua", serif;
+  font-size: 1.4rem;
+  margin: 0;
+  font-weight: 500;
+  color: #1f2937;
+}
+
+.title span {
+  color: #06b6d4;
+}
+
+/* RIGHT */
+
+.navbar-right {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+/* Language Switch */
+
+.lang-switch {
+  display: flex;
+  background: #f3f4f6;
+  border-radius: 20px;
+  padding: 3px;
+}
+
+.lang-switch button {
+  border: none;
+  background: transparent;
+  padding: 0.35rem 0.8rem;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 0.85rem;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.lang-switch button.active {
+  background: white;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+  font-weight: 600;
+}
+
+/* User Section */
+
+.user-section {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+}
+
+.avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 2px solid #e5e7eb;
+}
+
+.username {
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: #374151;
+}
+
+/* Logout */
+
+.logout-btn {
+  background: none;
+  border: none;
+  color: #6b7280;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.logout-btn:hover {
+  color: #ef4444;
+}
+
+.lang-switch {
+  display: flex;
+  background: #f3f4f6;
+  border-radius: 18px;
+  padding: 2px;
+  height: 32px;
+}
+
+.lang-switch button {
+  font-size: 0.8rem;
+  padding: 0 0.8rem;
+  border-radius: 18px;
+  display: flex;
+  align-items: center;
+}
+
+.lang-switch button.active {
+  background: white;
+  font-weight: 600;
+}
+
+.user-section {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 4px 10px;
+  border-radius: 20px;
+  transition: background 0.2s ease;
+}
+
+.user-section:hover {
+  background: #f9fafb;
+}
+
+.avatar {
+  width: 28px;
+  height: 28px;
+}
+
+.username {
+  font-size: 0.85rem;
+}
+
+.navbar-right {
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
+}
+
+.custom-avatar {
+  background-color: #0ea5e9;
+  color: white;
+  font-weight: 600;
+}
+
+/* =====================================
+   NAVBAR STRUCTURE (LEFT / RIGHT METHOD)
+===================================== */
+
+.navbar {
+  display: flex;
+  align-items: center;
+  height: 64px;
+  padding: 0 2rem;
+  background: linear-gradient(
+    90deg,
+    #ffffff 0%,
+    #f0fdfa 100%
+  );
+  border-bottom: 1px solid #e5e7eb;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+  width: 100%;
+}
+
+/* ================= LEFT ================= */
+
+.navbar-left {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+/* ================= RIGHT ================= */
+
+.navbar-right {
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
+  padding-right: 2.5rem;
+  margin-left: auto;   /* 🔥 THIS replaces space-between */
+}
+
+/* =====================================
+   LOGO
+===================================== */
+
+.logo {
+  width: 34px;
+  height: 34px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  color: white;
+  font-size: 1rem;
+}
+
+/* =====================================
+   TITLE
+===================================== */
+
+.title {
+  font-family: "Inknut Antiqua", serif;
+  font-size: 2.1rem;
+  margin: 0;
+  font-weight: 500;
+  color: #1f2937;
+}
+
+.title span {
+  color: #0d9488;
+}
+
+/* =====================================
+   LANGUAGE SWITCH
+===================================== */
+
+.lang-switch {
+  display: flex;
+  background: #f3f4f6;
+  border-radius: 18px;
+  padding: 2px;
+  height: 32px;
+}
+
+.lang-switch button {
+  border: none;
+  background: transparent;
+  padding: 0 0.8rem;
+  border-radius: 18px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+}
+
+.lang-switch button img {
+  width: 18px;
+  height: auto;
+}
+
+.lang-switch button.active {
+  background: white;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+}
+
+/* =====================================
+   USER SECTION
+===================================== */
+
+.user-section {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 4px 10px;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.user-section:hover {
+  background: #f9fafb;
+}
+
+.avatar {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: 2px solid #e5e7eb;
+}
+
+.username {
+  padding-left: 10px;
+  font-size: 1.5rem;
+  font-weight: 500;
+  color: #374151;
+}
+
+/* =====================================
+   LOGOUT
+===================================== */
+
+.logout-btn {
+  background: none;
+  border: none;
+  color: #6b7280;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.logout-btn:hover {
+  color: #ef4444;
+}
+
+.user-section {
+  position: relative; /* 🔥 nécessaire */
+}
+
+/* Dropdown container */
+.user-dropdown {
+  position: absolute;
+  top: 110%;
+  right: 0;
+
+  background: white;
+  border-radius: 12px;
+  min-width: 140px;
+
+  box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+  border: 1px solid #f1f5f9;
+
+  padding: 6px 0;
+  z-index: 1000;
+
+  animation: fadeIn 0.15s ease;
+}
+
+/* Item */
+.dropdown-item {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+
+  padding: 8px 12px;
+  font-size: 0.85rem;
+  color: #374151;
+  cursor: pointer;
+
+  transition: all 0.2s ease;
+}
+
+/* Hover */
+.dropdown-item:hover {
+  background: #f9fafb;
+}
+
+/* Logout style */
+.dropdown-item.logout {
+  color: #ef4444;
+}
+
+.dropdown-item.logout:hover {
+  background: #fef2f2;
+}
+
+/* Animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-5px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

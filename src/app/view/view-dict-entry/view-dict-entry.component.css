@@ -1,0 +1,52 @@
+.card {
+  display: flex;
+  flex-direction: column;
+  padding: 10px 20px;
+  margin: 0px 25px 25px 25px;
+  border-radius: 10px;
+  box-shadow: 5px 5px 10px 0 gray;
+  background-color: rgb(245, 245, 245);
+  width: 100%;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+hr.custom-divider {
+  width: 15%;
+  height: 2px;
+  background-color: black;
+  border: none;
+  margin: 1.5rem auto;
+}
+
+.tableScrollHeight {
+  max-height: calc(94vh - 100px);
+  overflow-y: auto;
+}
+
+/* For bullet points with spacing */
+ul.list-disc li {
+  margin-bottom: 4px;
+}
+
+/* Optional: improve sense label formatting */
+b {
+  font-size: 1rem;
+}
+
+.text{
+  font-size: 1.4rem;
+}
+
+/* Dropdown scrollbar */
+:host ::ng-deep .p-select-items-wrapper { scrollbar-width: thin; scrollbar-color: #94a3b8 #f3f4f6; }
+:host ::ng-deep .p-select-items-wrapper::-webkit-scrollbar { width: 6px; }
+:host ::ng-deep .p-select-items-wrapper::-webkit-scrollbar-thumb { background: #94a3b8; border-radius: 4px; }
+
+.card::-webkit-scrollbar {
+  width: 6px;
+}
+
+.card::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 6px;
+}

@@ -1,19 +1,26 @@
-<div id="card">
-  <div id="inside_card">
-      <header>
-        <div class="left">
-          <div class="name">
-            <p class="text">Lexical Function</p>
-          </div>
-        </div>
-      </header>
+<div class="lexgov-card">
 
-      <header>
-        <div class="right">
-          <div class="name">
-            <p class="text">Pattern government</p>
-          </div>
-        </div>
-      </header>
-</div>
+  <div class="lexgov-title">Sense Tools</div>
+  
+  <div
+    class="lexgov-tab"
+    [class.active]="activeTab === 'Lexical Function'"
+    (click)="selectTab('Lexical Function')">
+    Lexical function
+  </div>
+
+  <div
+    class="lexgov-tab"
+    [class.active]="activeTab === 'Pattern government'"
+    (click)="selectTab('Pattern government')">
+    Government pattern
+  </div>
+
+  <div
+    class="lexgov-tab"
+    [class.active]="activeTab === 'Examples'"
+    (click)="selectTab('Examples')">
+    Examples
+  </div>
+
 </div>

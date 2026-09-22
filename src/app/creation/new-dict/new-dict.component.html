@@ -1,0 +1,76 @@
+<form [formGroup]="form" (ngSubmit)="saveNewDict()" class="new-dict-wrapper">
+
+  <div class="new-dict-container">
+
+    <!-- LEFT CONFIG MENU -->
+    <div class="config-panel">
+      <div class="config-title">Configuration</div>
+
+      <div class="config-item active">
+        <i class="pi pi-book"></i>
+        General Information
+      </div>
+
+      <div class="config-item">
+        <i class="pi pi-globe"></i>
+        Linguistic Metadata
+      </div>
+
+      <div class="config-item">
+        <i class="pi pi-cog"></i>
+        Advanced Options
+      </div>
+    </div>
+
+    <!-- RIGHT FORM -->
+    <div class="form-panel">
+
+      <div class="form-header">
+        <div class="header-icon">
+          <i class="pi pi-book"></i>
+        </div>
+
+        <div>
+          <h2>New Dictionary</h2>
+          <p>Create and configure a new lexical resource</p>
+        </div>
+      </div>
+
+      <div class="form-body">
+
+        <!-- LABEL -->
+        <div class="field">
+          <label>Label *</label>
+          <input type="text" formControlName="label" />
+        </div>
+
+        <!-- LANGUAGE -->
+        <div class="field">
+          <label>Language *</label>
+          <input type="text" formControlName="language" />
+          <small>Example: Italian, Français, English</small>
+        </div>
+
+        <!-- DESCRIPTION -->
+        <div class="field">
+          <label>Description</label>
+          <textarea rows="4" formControlName="description"></textarea>
+        </div>
+
+      </div>
+
+      <div class="form-actions">
+        <button type="button" class="cancel-btn" (click)="cancel()">
+          Cancel
+        </button>
+
+        <button type="submit" class="save-btn" [disabled]="form.invalid">
+          <i class="pi pi-check"></i> Save
+        </button>
+      </div>
+
+    </div>
+
+  </div>
+
+</form>

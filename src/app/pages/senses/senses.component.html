@@ -1,54 +1,158 @@
-<body>
+
+<!-- Header -->
+<app-header></app-header>
+
 <main class="main">
-  <!-- Header -->
-  <app-header></app-header>
 
   <!-- Main Content -->
   <div class="content">
     <!-- Left Side -->
-    <div class="left-side">
-      <!-- Search Component -->
-      <div class="row">
-        <app-search [(search)]="search"
-                    [selectedLanguage]="selectedLanguage"
-                    (languageChanged)="selectedLanguage = $event">
-        </app-search>
-      </div>
-
+    <div class="left-side" [ngStyle]="{ width: leftPanelWidth }">
       <!-- Dictionary Entries -->
-      <div class="row">
-        <div id="card" class="tableScrollHeight">
+      <div class="dict-wrapper">
+        <div id="card_dict_entry">
           <div id="inside_card">
-            @for (dictEntry of getECDEntries(); track dictEntry) {
-              <app-dict-entry
-                [dictEntry]="dictEntry"
-                [isSelected]="dictEntry.dictionaryEntry === selectedEntryId"
-                [detailedEntry]="dictEntry.dictionaryEntry === selectedEntryId ? detailedEntry : null"
-                (entrySelected)="loadDictEntry(dictEntry.dictionaryEntry)">
-              </app-dict-entry>
-            }
+            <app-dict-entry
+              [(displayPart)]="displayPart"
+              [selectedLanguage]="selectedLanguage"
+              (entrySelected)="loadDictEntry($event)"
+              (entryViewRequested)="viewEntryDetails($event)"
+              (dictUpdateRequested)="updateDictDetails($event)"
+              (entryUpdateRequested)="updateEntryDetails($event)"
+              (formUpdateRequested)="onFormUpdateRequested($event)"
+              (addFormRequested)="openNewForm($event)"
+              (addSenseRequested)="openNewSense($event)"
+              (resetActiveTab)="activeTab = null">
+            </app-dict-entry>
           </div>
         </div>
       </div>
     </div>
+    <!-- 👉 Resizer -->
+    <div class="resizer" (mousedown)="startResizing($event)"></div>
 
     <!-- Right Side -->
     <div class="right-side">
-      <!-- Exemple Component -->
-      <div>
-        <app-exemple></app-exemple>
+      <!-- add new dict -->
+      <div *ngIf="displayPart == 'newD'">
+        <app-new-dict>
+        </app-new-dict>
       </div>
 
-      <!-- Lexical Governance -->
-      <div>
-        <app-lex-gov></app-lex-gov>
+      <!-- list dictionaries -->
+      <div *ngIf="displayPart == 'listD'">
+        <app-list-dict></app-list-dict>
       </div>
 
-      <!-- Lexical Function -->
-      <div>
-        <app-lexical-function></app-lexical-function>
+      <!-- update dict  -->
+      <div *ngIf="displayPart == 'updateD'">
+        <app-update-dict
+          [dictId]="selectedDictId">
+        </app-update-dict>
+
       </div>
+
+      <!-- add new dict entry -->
+      <div *ngIf="displayPart == 'newDE'">
+        <app-new-dict-entry (entryCreated)="onEntryCreated()"></app-new-dict-entry>
+      </div>
+
+      <!-- update dict entry -->
+      <div *ngIf="displayPart == 'updateDE'">
+        <app-update-dict-entry
+          [dictEntryId]="selectedDictId"
+          (entryUpdated)="onEntryUpdated()">
+        </app-update-dict-entry>
+
+
+      </div>
+
+      <!-- add new language -->
+      <div *ngIf="displayPart == 'newLanguage'">
+        <app-new-language></app-new-language>
+      </div>
+
+      <!-- add new form -->
+      <div *ngIf="displayPart == 'newForm'">
+        <app-new-form [dictEntryId]="dictEntryId"
+                      (formCreated)="onFormCreate()"></app-new-form>
+      </div>
+
+      <!-- add new Sense -->
+      <div *ngIf="displayPart == 'newSense'">
+        <app-new-sense [dictEntryId]="dictEntryId"></app-new-sense>
+      </div>
+
+      <!-- update form -->
+      <div *ngIf="displayPart == 'updateForm'">
+        <app-update-form
+          *ngIf="displayPart === 'updateForm'"
+          [formId]="selectedDictId"
+          [dictEntryId]="dictEntryId"
+          (formUpdated)="onFormCreate()">
+        </app-update-form>
+      </div>
+
+      <!-- Sense Order -->
+      <div *ngIf="displayPart == 'senseOrder'" class="sense-order">
+        <app-sense-order
+          [senses]="detailedEntry">
+        </app-sense-order>
+      </div>
+
+      <!-- View Dict_entry -->
+      <div *ngIf="displayPart == 'viewDE'">
+        <app-view-dict-entry
+          [dictEntryId]="selectedViewEntryId"
+          [forms]="viewForms"
+          [senses]="viewSenses">
+        </app-view-dict-entry>
+      </div>
+
+
+
+      <div *ngIf="displayPart == 'Sense'" class="sense-editor">
+
+        <!-- FIRST PANEL -->
+        <div class="sense-container">
+
+          <!-- LEFT NAVIGATION -->
+          <div class="sense-nav">
+            <app-lex-gov [(activeTab)]="activeTab"></app-lex-gov>
+          </div>
+
+          <!-- RIGHT PANEL -->
+          <div class="sense-panel">
+            <app-definition></app-definition>
+          </div>
+
+        </div>
+
+        <!-- SECOND PANEL -->
+
+        <div class="sense-bottom-a">
+          <ng-container [ngSwitch]="activeTab">
+
+            <app-pattern-government
+              *ngSwitchCase="'Pattern government'">
+            </app-pattern-government>
+
+            <app-lexical-function
+              *ngSwitchCase="'Lexical Function'">
+            </app-lexical-function>
+
+            <app-exemple
+              *ngSwitchCase="'Examples'">
+            </app-exemple>
+
+          </ng-container>
+
+      </div>
+      </div>
+
     </div>
   </div>
+
 </main>
-</body>
+<app-footer></app-footer>
+

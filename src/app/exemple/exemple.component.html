@@ -1,74 +1,16 @@
-<div id="card">
-  <!-- Header with Definition, Input, and Button -->
-  <div class="header-container">
-    <p class="text">Definition</p>
-    <div contenteditable="true" class="input_description"
-         (input)="updateDescription($event)"
-         (keyup)="updateCursorPosition()"
-         #descriptionField
-         [contentEditable]="isEditing"
-         [innerHTML]="selectedDefinition">
-    </div>
-    <button *ngIf="isEditing" (click)="openModal()" >Sense</button>
-    <button (click)="enableEditing()" *ngIf="!isEditing">Edit</button>
-    <button *ngIf="isEditing" (click)="saveEditedDefinition()">Save</button>
+<div class="example-card">
+  <div class="example-header">
+    <span class="example-title">Example</span>
+
+    <span class="saving-indicator" *ngIf="saving">
+      saving…
+    </span>
   </div>
 
-
-  <!-- Examples Section -->
-  <div class="content-container">
-    <p class="text">Examples</p>
-    <div id="inside_def">
-      <div id="Definition">
-        <div class="desc">
-          <div class="description">
-            <p>{{ selectedExample }}</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
-
-<!-- Modal pour ajouter un sens -->
-<div class="modal" *ngIf="isModalOpen">
-  <div class="modal-content">
-    <button (click)="closeModal()" class="button_close">&times;</button>
-    <h2>Add a sense</h2>
-    <select id="sense" name="sense" (change)="onSenseSelect($event)">
-      <option value=""></option>
-      @for (type of getSenses(); track type) {
-        <option [value]="type.sense">{{ sharedFunctionModel.extractLabelFromURI(type.sense) }}</option>
-      }
-    </select>
-
-    <header>
-      <div class="left">
-        <p class="text">Definition</p>
-      </div>
-    </header>
-
-    <div class="description">
-      <div
-           [innerHTML]="selectedDescription">
-    </div>
-
-    <button class="button_close" (click)="addSenseToDescription()">Add</button>
-  </div>
-</div>
-
-<!-- Modal for Displaying Sense Definition -->
-<div class="modal" *ngIf="isDefinitionModalOpen">
-  <div class="modal-content">
-    <button (click)="closeDefinitionModal()" class="button_close">&times;</button>
-    <h2>Definition</h2>
-    <div
-      [innerHTML]="selectedDefinition">
-    </div>
-    <h3>Example</h3>
-    <div
-      [innerHTML]="selectedExample">
-    </div>
+  <div
+    #exampleField
+    contenteditable="true"
+    class="example-input"
+    (input)="onExampleInput()">
   </div>
 </div>

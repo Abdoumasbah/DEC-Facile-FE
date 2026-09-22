@@ -1,0 +1,274 @@
+.sense-preview {
+  margin-top: 2rem;
+  padding: 1.25rem 1.5rem;
+  background-color: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+}
+
+.sense-preview-title {
+  font-size: 0.85rem;
+  color: #6b7280;
+  margin-bottom: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.sense-preview-item {
+  display: flex;
+  gap: 0.75rem;
+  line-height: 1.6;
+  padding: 0.15rem 0;
+}
+
+.sense-preview-label {
+  min-width: 4.5rem;
+  font-weight: 700;
+  color: #0f172a;
+  font-variant-numeric: tabular-nums;
+}
+
+.sense-preview-label::after {
+  margin-left: 0.5rem;
+  color: #cbd5e1;
+}
+
+.sense-preview-definition {
+  color: #1f2937;
+}
+
+.p-button.p-button-text {
+  opacity: 0.6;
+}
+
+.p-table tr:hover .p-button {
+  opacity: 1;
+}
+
+.level-a {
+  font-weight: 600;
+  color: #334155;
+}
+
+.level-1 {
+  font-weight: 600;
+  color: #334155;
+}
+
+.level-1 {
+  font-weight: 600;
+  color: #334155;
+}
+.selected-row {
+  background-color: #e0f2fe !important;
+  box-shadow: inset 3px 0 0 #0284c7;
+}
+
+.p-table tbody tr {
+  transition: background-color 0.15s ease;
+}
+
+.p-table tbody tr:hover {
+  background-color: #f1f5f9;
+}
+
+.sense-order-wrapper {
+  width: 100%;
+  background: linear-gradient(180deg, #ffffff 0%, #f9fafb 100%);
+  border-radius: 14px;
+  padding: 2.25rem 2.75rem;
+  box-shadow:
+    0 8px 24px rgba(0,0,0,0.08),
+    0 1px 2px rgba(0,0,0,0.05);
+  animation: fadeInScale 0.2s ease-out;
+}
+
+
+
+.move-buttons {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  min-width: 28px;
+  margin-top: 0.15rem;
+
+  opacity: 0.45;
+  transition: opacity 0.2s ease;
+}
+
+.move-buttons .p-button {
+  width: 1.4rem;
+  height: 1.4rem;
+  padding: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.move-buttons .pi {
+  font-size: 0.7rem;
+}
+
+.p-table tr:hover .move-buttons {
+  opacity: 1;
+}
+
+/* TABLE BASE */
+.p-table {
+  border-radius: 8px;
+  overflow: hidden;
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+}
+
+.p-table thead th {
+  background-color: #f8fafc;
+  font-weight: 600;
+  font-size: 0.85rem;
+  color: #334155;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+/* ===== LEVEL COLUMNS SPACING ===== */
+.p-table td.level-i,
+.p-table td.level-1,
+.p-table td.level-a {
+  padding-left: 1.25rem;
+  padding-right: 1.25rem;
+  white-space: nowrap;
+}
+
+/* subtle column separators */
+.p-table td.level-i {
+  border-left: 1px dashed #e5e7eb;
+}
+
+.p-table td.level-1 {
+  border-left: 1px dashed #e5e7eb;
+}
+
+.p-table td.level-a {
+  border-left: 1px dashed #e5e7eb;
+}
+
+/* ===== DEFINITION CELL IMPROVEMENT ===== */
+.definition-cell {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.definition-cell > div:last-child {
+  max-width: 60ch;            /* 👈 limite la largeur de lecture */
+  padding: 0.35rem 0;
+  line-height: 1.55;
+  color: #1f2937;
+}
+
+/* child definitions slightly indented */
+.pl-6 .definition-cell > div:last-child {
+  color: #334155;
+}
+
+/* ===== ROW SPACING ===== */
+.p-table tbody tr {
+  height: auto;
+}
+
+.p-table tbody tr td {
+  padding-top: 0.6rem;
+  padding-bottom: 0.6rem;
+}
+
+/* stronger separation between containers */
+.p-table tbody tr + tr {
+  border-top: 1px solid #f1f5f9;
+}
+.level-i {
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.level-1 {
+  font-weight: 600;
+  color: #1e293b;
+}
+
+.level-a {
+  font-weight: 600;
+  color: #475569;
+}
+
+
+/* ===== 1 | + / - LAYOUT ===== */
+.level-inline {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;           /* espace entre 1 et la colonne + / - */
+}
+
+.level-value {
+  min-width: 1.2rem;
+  text-align: right;
+  font-weight: 700;
+}
+
+.level-vertical-buttons {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  line-height: 1;
+}
+
+.level-vertical-buttons .p-button {
+
+  padding: 0;
+  width: 1rem;
+
+}
+
+.level-vertical-buttons .p-button:last-child {
+  opacity: 0.6;
+}
+
+.p-button-text .pi-plus,
+.p-button-text .pi-minus {
+  font-size: 0.6rem;
+}
+
+.p-button-text {
+  width: 1rem;
+  height: 1rem;
+  padding: 0;
+}
+
+/* ===== SAVE BUTTON ===== */
+
+.sense-actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 1rem;
+}
+
+.save-btn {
+  background: linear-gradient(145deg, #0d9488, #0f766e);
+  border: none !important;
+  color: white;
+
+  padding: 0.7rem 1.2rem;
+  border-radius: 10px;
+
+  font-weight: 600;
+  box-shadow: 0 4px 12px rgba(20,184,166,0.25);
+
+  transition: all 0.2s ease;
+  gap: 10px;
+}
+
+.save-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(20,184,166,0.35);
+}

@@ -1,0 +1,143 @@
+<form
+  [formGroup]="form"
+  (ngSubmit)="saveNewForm()"
+  class="new-dict-wrapper">
+
+  <div class="new-dict-card">
+
+    <h2 class="form-title">New Form</h2>
+
+    <!-- LABEL + LANGUAGE -->
+    <div class="form-row">
+      <div class="form-group flex-2">
+        <label>
+          Label <span class="required">*</span>
+        </label>
+        <input
+          type="text"
+          pInputText
+          formControlName="label"
+          placeholder="Form label"
+        />
+      </div>
+
+      <div class="form-group flex-1">
+        <label>Language</label>
+        <div class="static-field">
+          &#64; <span [innerHTML]="languages"></span>
+        </div>
+      </div>
+
+      <!-- POS -->
+      <div class="form-group flex-1">
+        <label>
+          Part of Speech <span class="required">*</span>
+        </label>
+
+        <p-select
+          formControlName="pos"
+          [options]="posOptions"
+          optionLabel="label"
+          placeholder="Select part of speech"
+          [filter]="posOptions.length > 5"
+          [showClear]="posOptions.length > 1">
+        </p-select>
+      </div>
+    </div>
+
+    <!-- TYPE -->
+    <div class="form-group">
+      <label>
+        Type <span class="required">*</span>
+      </label>
+
+      <div class="type-select">
+        <p-select-button
+          formControlName="type"
+          [options]="typeOptions"
+          optionLabel="label"
+          optionValue="value">
+        </p-select-button>
+      </div>
+    </div>
+
+    <!-- MORPHOLOGICAL FEATURES -->
+    <div class="form-group">
+      <label class="flex items-center gap-2">
+        Morphological features
+        <button
+          type="button"
+          pButton
+          icon="pi pi-plus"
+          class="p-button-text p-button-sm"
+          (click)="addMorphoFeature()">
+        </button>
+      </label>
+
+      <div
+        class="morpho-row"
+        *ngFor="let mf of morphoFeatures.controls; let i = index"
+        [formGroup]="getMorphoGroup(i)">
+
+        <!-- PROPERTY -->
+        <p-select
+          formControlName="property"
+          [options]="morphologies"
+          optionLabel="propertyLabel"
+          placeholder="Select feature"
+          (onChange)="onMorphoPropertyChange(i)">
+        </p-select>
+
+        <!-- VALUE -->
+        <p-select
+          formControlName="value"
+          [options]="getMorphoValues(i)"
+          optionLabel="valueLabel"
+          placeholder="Select value">
+        </p-select>
+
+        <!-- REMOVE -->
+        <button
+          type="button"
+          pButton
+          icon="pi pi-trash"
+          class="p-button-text p-button-danger"
+          (click)="removeMorphoFeature(i)">
+        </button>
+      </div>
+
+    </div>
+
+
+
+    <!-- NOTE -->
+    <div class="form-group">
+      <label>Note</label>
+      <div
+        contenteditable="true"
+        class="note-field"
+        (input)="updateNote($event)"
+        #noteField>
+      </div>
+    </div>
+
+    <!-- ACTIONS -->
+    <div class="form-actions">
+      <button
+        pButton
+        type="button"
+        label="Cancel"
+        class="p-button-text"
+        (click)="form.reset()">
+      </button>
+
+      <button
+        pButton
+        type="submit"
+        label="Save"
+        class="p-button-primary">
+      </button>
+    </div>
+
+  </div>
+</form>

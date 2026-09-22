@@ -20,4 +20,22 @@ export class LanguageService {
       map(response => response.map(item => LanguageModel.fromJson(item)))
     );
   }
+
+  private currentLang: 'en' | 'fr' = 'en';
+
+  setLanguage(lang: 'en' | 'fr') {
+    this.currentLang = lang;
+    localStorage.setItem('lang', lang);
+  }
+
+  getLanguage(): 'en' | 'fr' {
+    return localStorage.getItem('lang') as 'en' | 'fr' || 'en';
+  }
+
+  toggleLanguage(): 'en' | 'fr' {
+    const newLang = this.currentLang === 'en' ? 'fr' : 'en';
+    this.setLanguage(newLang);
+    return newLang;
+  }
+
 }

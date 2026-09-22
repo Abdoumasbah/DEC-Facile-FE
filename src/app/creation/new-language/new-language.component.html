@@ -1,0 +1,31 @@
+<form [formGroup]="form" (ngSubmit)="saveNewLanguage()">
+
+  <div style="display: flex">
+
+    <div class="card tableScrollHeight">
+
+      <!-- Label -->
+      <div class="header-container">
+        <p class="text italic left-text">Label*</p>
+        <input type="text" formControlName="label" class="input_description"/>
+      </div>
+
+      <!-- Description -->
+      <div class="header-container">
+        <p class="text italic left-text">Description*</p>
+        <input type="text" formControlName="description" class="input_description"/>
+      </div>
+
+      <!-- language -->
+      <div class="header-container">
+        <p class="text italic left-text">language*</p>
+        <input type="text" formControlName="language" class="input_description"/>
+      </div>
+
+      <div class="justify-end">
+        <button pButton type="submit" label="Save"></button>
+      </div>
+
+    </div>
+  </div>
+</form>

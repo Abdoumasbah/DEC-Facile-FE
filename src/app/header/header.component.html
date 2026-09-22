@@ -1,3 +1,48 @@
-<div class="title-header">
-  <h1>DEC Facile</h1>
+<div class="navbar">
+
+  <!-- Left Section -->
+  <div class="navbar-left">
+    <div class="logo">
+      <img src="assets/logos/book.png" class="entry-book-icon" />
+    </div>
+    <h1 class="title">DEC <span>Facile</span></h1>
+  </div>
+
+  <!-- Right Section -->
+  <div class="navbar-right">
+
+    <!-- Language Switch -->
+    <div class="lang-switch">
+      <button
+        (click)="switchLanguage('en')"
+        [class.active]="currentLang === 'en'">
+        <img src="https://flagcdn.com/w20/gb.png" alt="English">
+      </button>
+
+      <button
+        (click)="switchLanguage('fr')"
+        [class.active]="currentLang === 'fr'">
+        <img src="https://flagcdn.com/w20/fr.png" alt="Français">
+      </button>
+    </div>
+
+    <!-- User Dropdown -->
+    <div class="user-section" (click)="toggleMenu()">
+
+<!--      <img src="https://i.pravatar.cc/40" class="avatar">-->
+      <i class="pi pi-user"></i>
+      <span class="username">Silvia</span>
+      <i class="pi pi-angle-down"></i>
+
+      <!-- Dropdown -->
+      <div class="user-dropdown" *ngIf="menuOpen">
+        <div class="dropdown-item logout" (click)="logout(); $event.stopPropagation()">
+          <i class="pi pi-sign-out"></i>
+          Logout
+        </div>
+      </div>
+
+    </div>
+
+  </div>
 </div>

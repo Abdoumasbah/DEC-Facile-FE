@@ -1,72 +1,219 @@
-<div id="card">
-  <div id="inside_card">
-    <!-- Header Row -->
-    <div class="pair-row header-row">
-      <div class="col-md-5">
-        <p class="text">Lexical Function</p>
-      </div>
-      <div class="col-md-5">
-        <p class="text">Senses</p>
-      </div>
-      <div class="button-container">
-        <button class="add-button" (click)="addNewPair()">+</button>
-      </div>
+<div class="lf-editor" *ngIf="!isLoading">
+
+  <!-- LEFT PANEL -->
+  <div class="lf-left">
+
+    <div class="lf-left-header">
+      Lexical Functions
     </div>
 
-    <!-- Main LF-Sense Pair -->
-    <div *ngIf="additionalPairs.length === 0" class="pair-row">
-      <div class="col-md-5">
-        <input *ngIf="selectedLexicalFunction" type="text" [value]="selectedLexicalFunction" readonly class="readonly-input">
-        <select *ngIf="!selectedLexicalFunction" id="type" name="type" (change)="onLFChange($event)">
-          <option value="" selected>-- Select a Lexical Function --</option>
-          <option *ngFor="let type of getLexFunct()" [value]="type">{{ type }}</option>
-        </select>
+    <div class="lf-list">
+
+      <div *ngFor="let lf of allLFKeys" class="lf-group">
+
+        <!-- LF HEADER -->
+        <div
+          class="lf-item"
+          [class.active]="lf === selectedLF"
+          (click)="toggleLF(lf)"
+        >
+
+          <div class="lf-item-label">
+            <button
+              pButton
+              [icon]="expandedLF === lf ? 'pi pi-angle-down' : 'pi pi-angle-right'"
+              class="p-button-text lf-collapse-btn"
+              (click)="toggleLF(lf); $event.stopPropagation()">
+            </button>
+
+            {{ sharedFunctionModel.extractLFFromURI(lf) }}
+          </div>
+
+          <div class="lf-item-actions">
+
+            <button
+              pButton
+              icon="pi pi-plus"
+              class="p-button-text"
+              (click)="startAddValue(lf); $event.stopPropagation()">
+            </button>
+
+          </div>
+
+        </div>
+
+        <!-- SENSES -->
+        <div *ngIf="expandedLF === lf" class="lf-sublist">
+
+          <div
+            *ngFor="let pair of groupedLFs[lf]"
+            class="lf-subitem"
+            [class.active]="selectedSenseView === pair"
+            (click)="selectSense(pair, lf)"
+          >
+
+            {{ getSenseL(pair.sense) }}
+
+            <button
+              pButton
+              icon="pi pi-trash"
+              class="p-button-text p-button-danger"
+              (click)="removePair(additionalPairs.indexOf(pair)); $event.stopPropagation()">
+            </button>
+
+          </div>
+
+        </div>
+
       </div>
 
-      <div class="col-md-5">
-        <input *ngIf="selectedSenseTarget" type="text" [value]="selectedSenseTarget" readonly class="readonly-input">
-        <select *ngIf="!selectedSenseTarget" id="sense" name="sense" (change)="onSenseChange($event)">
-          <option value="" selected>-- Select a Sense --</option>
-          <option *ngFor="let sense of getSenses()" [value]="sense">{{ sense }}</option>
-        </select>
-      </div>
-
-      <!-- Delete Button for Main LF-Sense Pair -->
-      <div class="button-container">
-        <button class="remove-button" (click)="deleteLFAndSense()">✖</button>
-      </div>
-      <div *ngIf="selectedLexicalFunction && selectedSenseTarget" class="button-save">
-        <button class="save-button" (click)="createLFAndSense()">&#10004;</button>
-      </div>
     </div>
+
+    <div class="lf-add-function-wrapper">
+
+      <button
+        pButton
+        icon="pi pi-plus"
+        label="Add function"
+        class="lf-add-function"
+        [disabled]="!hasAvailableSenses"
+        (click)="openLFDrawer()">
+      </button>
+
+    </div>
+
   </div>
 
-  <!-- Additional LF-Sense Pairs -->
-  <div id="additional_pairs">
-    <div *ngFor="let pair of additionalPairs; let i = index" class="pair-row">
-      <div class="col-md-5">
-        <input *ngIf="pair.lexicalFunction" type="text" [value]="pair.lexicalFunction" readonly class="readonly-input">
-        <select *ngIf="!pair.lexicalFunction" name="additionalLF" (change)="onLFChangeForPair($event, pair)">
-          <option value="" selected>-- Select a Lexical Function --</option>
-          <option *ngFor="let type of getLexFunct()" [value]="type">{{ type }}</option>
-        </select>
+
+  <!-- RIGHT PANEL -->
+  <div class="lf-right" *ngIf="selectedLF && mode === 'add'">
+
+    <div class="lf-right-title">
+      {{ sharedFunctionModel.extractLFFromURI(selectedLF) }}
+    </div>
+
+    <div class="lf-right-content">
+    <!-- SENSE SELECT -->
+    <div class="lf-field">
+
+      <label>Sense</label>
+
+      <p-select
+        [options]="senseOptions"
+        optionLabel="label"
+        optionValue="value"
+        [(ngModel)]="selectedSenseInput"
+        placeholder="Select sense"
+        [filter]="true"
+        (onChange)="onSenseInputChange($event)">
+      </p-select>
+
+    </div>
+
+
+    <!-- DEFINITION -->
+    <div class="lf-field" *ngIf="selectedSenseInput">
+
+      <label>Definition</label>
+
+      <div
+        class="lf-definition-readonly"
+        [innerHTML]="ecdMeanings[selectedSenseInput]?.definition">
       </div>
 
-      <div class="col-md-5">
-        <input *ngIf="pair.sense" type="text" [value]="pair.sense" readonly class="readonly-input">
-        <select *ngIf="!pair.sense" name="additionalSense" (change)="onSenseChangeForPair($event, pair)">
-          <option value="" selected>-- Select a Sense --</option>
-          <option *ngFor="let sense of getSenses()" [value]="sense">{{ sense }}</option>
-        </select>
-      </div>
-
-      <!-- Remove Button for Additional Pairs -->
-      <div class="button-container">
-        <button class="remove-button" (click)="removePair(i)">✖</button>
-      </div>
-      <div class="button-save">
-        <button class="save-button" (click)="createLFAndSense(pair)">&#10004;</button>
-      </div>
+    </div>
     </div>
   </div>
+  <!-- RIGHT PANEL - VIEW MODE -->
+  <div class="lf-right" *ngIf="selectedLF && mode === 'view'">
+
+    <div class="lf-right-title">
+      {{ sharedFunctionModel.extractLFFromURI(selectedLF) }}
+    </div>
+
+    <!-- EMPTY -->
+    <div *ngIf="!selectedSenseView" class="lf-empty">
+      Select a sense to see details
+    </div>
+
+    <!-- DETAILS -->
+    <div *ngIf="selectedSenseView" class="lf-sense-details">
+
+      <!-- Sense -->
+      <div class="lf-field">
+        <label>Sense</label>
+        <div class="lf-readonly">
+          {{ getSenseL(selectedSenseView.sense) }}
+        </div>
+      </div>
+
+      <!-- Definition -->
+      <div class="lf-field">
+        <label>Definition</label>
+        <div
+          class="lf-definition-readonly"
+          [innerHTML]="ecdMeanings[selectedSenseView.sense]?.definition">
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
 </div>
+
+<p-dialog
+  [(visible)]="showLFDrawer"
+  [dismissableMask]="true"
+  [draggable]="false"
+  [resizable]="false"
+  [closeOnEscape]="true"
+  position="right"
+  styleClass="lf-drawer clickable-drawer"
+  [baseZIndex]="12000"
+  [modal]="false"
+>
+
+  <ng-template pTemplate="header">
+    <div class="lf-drawer-header">
+      Select Lexical Function
+    </div>
+  </ng-template>
+
+  <div class="lf-drawer-content">
+
+    <!-- Search -->
+    <input
+      type="text"
+      pInputText
+      placeholder="Search lexical function..."
+      [(ngModel)]="lfDrawerSearch"
+      class="lf-drawer-search"
+    />
+    <div class="lf-drawer-count">
+      {{ filteredDrawerLFList.length }} functions
+    </div>
+
+    <div class="lf-drawer-section-label">
+      Available Lexical Functions
+    </div>
+
+    <!-- List -->
+    <div class="lf-drawer-list">
+
+      <div
+        *ngFor="let lf of filteredDrawerLFList"
+        class="lf-drawer-item"
+        (click)="onDrawerClick(lf, $event)"
+      >
+        <div class="lf-name">
+          {{ sharedFunctionModel.extractLFFromURI(lf.lexicalFunction) }}
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</p-dialog>

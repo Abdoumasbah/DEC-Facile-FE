@@ -1,0 +1,330 @@
+/* =====================================
+   GLOBAL LAYOUT STRUCTURE (CORRECT)
+===================================== */
+
+html, body {
+  height: 100%;
+  margin: 0;
+  background: #f5f7fa;
+}
+
+app-root {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+app-header {
+  flex-shrink: 0;
+}
+
+main.main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 0; /* 🔥 CRITICAL */
+}
+
+app-footer {
+  flex-shrink: 0;
+}
+/* =====================================
+   MAIN CONTENT AREA
+===================================== */
+
+.content {
+  flex: 1;                     /* 🔥 important */
+  display: flex;
+  gap: 4px;
+  padding: 20px;
+  box-sizing: border-box;
+  min-height: 0;
+}
+
+/* =====================================
+   LEFT PANEL
+===================================== */
+
+.left-side {
+  width: 320px;
+  flex-shrink: 0;
+
+  background: #ffffff;
+  border-radius: 18px;
+  border: 1px solid #e5e7eb;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+
+  padding: 18px 18px 18px 28px;
+
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  min-height: 0;   /* 🔥 critical */
+}
+/* Inner content scroll */
+#card {
+  flex: 1;
+  overflow: hidden;
+  background: transparent;
+  box-shadow: none;
+  border-radius: 0;
+  padding: 0;
+  min-height: 0;
+
+}
+
+#inside_card {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+/* =====================================
+   RESIZER
+===================================== */
+
+.resizer {
+  width: 4px;
+  cursor: col-resize;
+}
+
+/* =====================================
+   RIGHT PANEL
+===================================== */
+
+.right-side {
+  flex: 1;
+  min-width: 0;              /* 🔥 VERY IMPORTANT (prevents overflow) */
+
+  overflow: hidden;
+  min-height: 0;
+}
+
+/* Scrollbar */
+.right-side::-webkit-scrollbar {
+  width: 6px;
+}
+
+.right-side::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 6px;
+}
+
+/* =====================================
+   FOOTER
+===================================== */
+
+app-footer {
+  display: block;
+  margin-top: 20px;
+}
+
+/* =====================================
+   RESPONSIVE
+===================================== */
+
+@media (max-width: 1100px) {
+
+  .content {
+    flex-direction: column;
+  }
+
+  .left-side {
+    width: 100%;
+  }
+
+}
+.left-side, .right-side {
+  height: calc(100vh - 64px - 60px - 20px);
+  /*
+    64px  = header height
+    60px  = footer height
+    20px  = petit espace visuel
+  */
+
+  margin-bottom: 20px; /* espace avant footer */
+}
+
+/* remove bootstrap row behavior */
+.left-side .row {
+  flex: 1;
+  min-height: 0;
+  margin: 0;
+}
+
+/* card wrapper */
+#card_dict_entry {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+/* inside wrapper */
+#inside_card {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+.dict-wrapper {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+/* ===============================
+   SENSE WRAPPER (like new-dict)
+================================ */
+
+.sense-wrapper{
+  padding:10px;
+}
+
+
+/* LEFT NAV */
+
+.sense-nav{
+  width:220px;
+  border-right:1px solid #e5e7eb;
+  padding-right:15px;
+}
+
+
+
+
+
+.sense-nav{
+  width:220px;
+  padding-right:20px;
+
+  border-right:1px solid #e5e7eb;
+
+  position:relative;
+}
+
+.sense-nav::after{
+  content:"";
+  position:absolute;
+  right:-1px;
+  top:0;
+  bottom:0;
+
+  width:1px;
+  background:linear-gradient(
+    to bottom,
+    transparent,
+    #e5e7eb,
+    transparent
+  );
+}
+
+/* ===============================
+   SENSE EDITOR
+================================ */
+
+.sense-editor{
+  display:flex;
+  flex-direction:column;
+  gap:20px;
+}
+
+/* NAVIGATION */
+
+.sense-nav{
+  width:220px;
+  flex-shrink:0;
+  border-right: 1px solid #f1f5f9;
+  background: #fafafa;
+}
+
+/* DEFINITION */
+
+.sense-definition{
+  flex:1;
+}
+
+/* BOTTOM PANEL */
+
+.sense-bottom{
+
+  background:#ffffff;
+
+  border-radius:16px;
+  border:1px solid #e5e7eb;
+
+  box-shadow:
+    0 8px 22px rgba(0,0,0,0.06);
+
+  padding:24px;
+
+  min-height:180px;
+}
+
+
+/* ===== FIRST PANEL (same structure as new-dict) ===== */
+
+.sense-container {
+  display: flex;
+  width: 100%;
+
+  background: #ffffff;
+
+  border-radius: 18px;
+  border: 1px solid #e5e7eb;
+
+  box-shadow: 0 8px 20px rgba(0,0,0,0.05);
+
+  overflow: hidden;
+}
+/* LEFT NAVIGATION */
+
+.sense-nav {
+  width: 240px;
+
+  padding: 1.8rem 1.2rem;
+
+  border-right: 1px solid #f1f5f9;
+
+  background: #f8fafc;   /* subtle grey */
+}
+
+/* RIGHT PANEL */
+
+.sense-panel {
+  flex: 1;
+
+  padding: 2rem 2.4rem;
+
+  background: #ffffff;
+}
+
+.sense-editor {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+/* 🔥 FIXED TOP */
+.sense-container {
+  flex-shrink: 0;
+}
+
+/* 🔥 SCROLLABLE AREA ONLY */
+.sense-bottom-a {
+  flex: 1;
+  overflow: hidden;
+  min-height: 0;
+}
+
+/* Scrollbar */
+.sense-bottom-a::-webkit-scrollbar {
+  width: 6px;
+}
+
+.sense-bottom-a::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 6px;
+}

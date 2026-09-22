@@ -1,0 +1,104 @@
+<form [formGroup]="form" (ngSubmit)="saveNewDictEntry()" class="new-dict-wrapper">
+
+  <div class="new-dict-card">
+
+    <h2 class="form-title">New Dictionary Entry</h2>
+
+    <div class="form-row">
+    <!-- Label -->
+    <div class="form-group flex-2">
+      <label>
+        Label <span class="required">*</span>
+      </label>
+      <input
+        type="text"
+        pInputText
+        formControlName="label"
+        placeholder="Insert the canonical form"
+      />
+    </div>
+
+    <!-- Language -->
+    <div class="form-group flex-1">
+      <label>
+        Language <span class="required">*</span>
+      </label>
+      <p-dropdown
+        [options]="languages"
+        optionLabel="label"
+        optionValue="value"
+        formControlName="language"
+        placeholder="Select language"
+        [filter]="true"
+        [showClear]="true"
+        filterMatchMode="startsWith"
+        styleClass="w-full">
+      </p-dropdown>
+    </div>
+
+    <!-- POS -->
+    <div class="form-group flex-1">
+      <label>
+        Part of Speech <span class="required">*</span>
+      </label>
+      <p-multiSelect
+        formControlName="pos"
+        [options]="posOptions"
+        optionLabel="label"
+        optionValue="value"
+        display="chip"
+        [filter]="true"
+        [showClear]="true"
+        filterMatchMode="startsWith"
+        placeholder="Select part of speech"
+        styleClass="w-full">
+      </p-multiSelect>
+    </div>
+    </div>
+
+    <!-- Type -->
+    <div class="form-group">
+      <label>
+        Entry Type <span class="required">*</span>
+      </label>
+      <div class="type-select">
+        <p-select-button
+          formControlName="type"
+          [options]="typeOptions"
+          optionLabel="label"
+          optionValue="value">
+        </p-select-button>
+      </div>
+    </div>
+
+    <!-- Note -->
+    <div class="form-group">
+      <label>Note</label>
+      <div
+        #noteField
+        contenteditable="true"
+        class="input_description note-field"
+        (input)="updateNote($event)">
+      </div>
+    </div>
+
+    <!-- Actions -->
+    <div class="form-actions">
+      <button
+        pButton
+        type="button"
+        label="Cancel"
+        class="p-button-text"
+        (click)="form.reset()">
+      </button>
+
+      <button
+        pButton
+        type="submit"
+        label="Save"
+        class="p-button-primary">
+      </button>
+    </div>
+
+  </div>
+</form>

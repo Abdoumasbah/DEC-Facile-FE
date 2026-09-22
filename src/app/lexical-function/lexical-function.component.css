@@ -1,0 +1,1891 @@
+/* ===== Card ===== */
+.lf-card {
+  margin: 0px 10px 0 10px;
+  padding: 18px 20px;
+  background: #ffffff;
+  border-radius: 14px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* ===== Header ===== */
+.lf-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.lf-title {
+  font-family: "Inknut Antiqua", serif;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #1f2937;
+  letter-spacing: 0.02em;
+  gap: 8px;
+}
+
+/* ===== Add button ===== */
+.add-lf-btn {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: #22c55e;
+  color: white;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.add-lf-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+/* ===== List ===== */
+.lf-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* ===== Row ===== */
+.lf-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* ===== Field ===== */
+.lf-field {
+  flex: 1;
+}
+
+.lf-field select,
+.lf-readonly {
+  width: 100%;
+  padding: 10px 12px;
+  font-size: 14px;
+  border-radius: 10px;
+  border: 1.5px solid #d1d5db;
+  background: #fafafa;
+  font-family: "Libre Baskerville", serif;
+}
+
+.lf-field select:focus {
+  outline: none;
+  border-color: #2563eb;
+  background: #ffffff;
+}
+
+/* ===== Readonly ===== */
+.lf-readonly {
+  background: #f3f4f6;
+  color: #111;
+}
+
+/* ===== Remove ===== */
+.lf-remove-btn {
+  background: #ef4444;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 34px;
+  height: 34px;
+  cursor: pointer;
+}
+
+.lf-remove-btn:hover {
+  background: #dc2626;
+}
+
+
+
+@keyframes fadeInScale {
+  from {
+    opacity: 0;
+    transform: scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* === Dropdown / multiselect height consistency === */
+:host ::ng-deep .p-select,
+:host ::ng-deep .p-multiselect {
+  min-height: 44px;
+  border-radius: 8px;
+}
+
+/* === Type select === */
+.type-select ::ng-deep .p-togglebutton {
+  min-width: 140px;
+  padding: 0.55rem 1.3rem;
+  border-radius: 10px !important;
+  border: 1.5px solid #d1d5db;
+  font-weight: 600;
+}
+
+.type-select ::ng-deep .p-togglebutton.p-togglebutton-checked {
+  background-color: #0d9488 !important;
+  color: #ffffff !important;
+  border-color: #0d9488 !important;
+}
+
+/* =========================
+   PRIME SELECT – FIX CHROME
+========================= */
+
+:host ::ng-deep .p-select,
+:host ::ng-deep .p-multiselect {
+  display: flex;
+  align-items: center;
+  min-height: 44px;
+  height: 44px;
+  padding: 0;
+  border-radius: 8px;
+  border: 1px solid #d1d5db;
+  background-color: #ffffff;
+}
+
+/* Label (selected value) */
+:host ::ng-deep .p-select-label,
+:host ::ng-deep .p-multiselect-label {
+  display: flex;
+  align-items: center;
+  height: 100%;
+  padding: 0 0.75rem;
+  line-height: 1;
+  font-size: 0.95rem;
+  color: #374151;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Placeholder */
+:host ::ng-deep .p-select-label.p-placeholder,
+:host ::ng-deep .p-multiselect-label.p-placeholder {
+  color: #9ca3af;
+}
+
+/* Trigger icon (chevron) */
+:host ::ng-deep .p-select-trigger,
+:host ::ng-deep .p-multiselect-trigger {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.75rem;
+  height: 100%;
+}
+
+/* Clear icon */
+:host ::ng-deep .p-select-clear-icon,
+:host ::ng-deep .p-multiselect-clear-icon {
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+:host ::ng-deep .p-select:focus-within,
+:host ::ng-deep .p-multiselect:focus-within {
+  border-color: #0d9488;
+  box-shadow: 0 0 0 2px rgba(13, 148, 136, 0.25);
+}
+
+/* =========================
+   DROPDOWN / MULTISELECT PANEL
+   (Chrome-safe)
+========================= */
+
+:host ::ng-deep .p-select-overlay,
+:host ::ng-deep .p-multiselect-overlay,
+:host ::ng-deep .p-select-overlay {
+  background-color: #f9fafb;
+  border-radius: 12px;
+  border: 1px solid #d1d5db;
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.12);
+  padding: 0.4rem 0;
+  min-width: calc(100% - 4px);
+  animation: overlayFadeIn 0.18s ease-out;
+  z-index: 1200 !important;
+}
+
+/* Items wrapper (scroll area) */
+:host ::ng-deep .p-select-items-wrapper,
+:host ::ng-deep .p-multiselect-items-wrapper {
+  max-height: 260px;
+  padding: 0.25rem 0;
+}
+
+/* Items */
+:host ::ng-deep .p-select-item,
+:host ::ng-deep .p-multiselect-item {
+  padding: 0.55rem 1rem;
+  font-size: 0.95rem;
+  color: #374151;
+  border-radius: 8px;
+  margin: 2px 6px;
+  transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+/* Hover */
+:host ::ng-deep .p-select-item:hover,
+:host ::ng-deep .p-multiselect-item:hover {
+  background-color: #e0f2f1;
+  color: #0f766e;
+}
+
+/* Selected */
+:host ::ng-deep .p-select-item.p-highlight,
+:host ::ng-deep .p-multiselect-item.p-highlight {
+  background-color: #0d9488 !important;
+  color: #ffffff !important;
+  font-weight: 600;
+}
+
+/* Search / filter input inside panel */
+:host ::ng-deep .p-select-panel .p-inputtext,
+:host ::ng-deep .p-multiselect-panel .p-inputtext {
+  margin: 0.4rem 0.6rem;
+  border-radius: 8px;
+}
+
+/* =========================
+   OVERLAY ANIMATION
+========================= */
+
+@keyframes overlayFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* =========================
+   MULTISELECT – BASE (v19-like)
+========================= */
+
+:host ::ng-deep .p-multiselect {
+  min-height: 44px;
+  border-radius: 8px;
+  border: 1px solid #d1d5db;
+  background-color: #ffffff;
+  display: flex;
+  align-items: center;
+}
+
+:host ::ng-deep .p-multiselect-label {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.35rem 0.6rem;
+  flex-wrap: wrap;
+}
+
+/* =========================
+   MULTISELECT CHIPS
+========================= */
+
+:host ::ng-deep .p-multiselect-token {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+
+  padding: 0.2rem 0.55rem;
+  border-radius: 9999px;
+
+  background-color: #f3f4f6; /* Prime gray-100 */
+  color: #374151;            /* Prime gray-700 */
+
+  font-size: 0.8rem;
+  font-weight: 500;
+
+  border: 1px solid #e5e7eb;
+  line-height: 1.2;
+}
+
+:host ::ng-deep .p-multiselect-token-icon {
+  font-size: 0.75rem;
+  color: #6b7280;
+  margin-left: 0.2rem;
+  cursor: pointer;
+  transition: color 0.15s ease;
+}
+
+:host ::ng-deep .p-multiselect-token-icon:hover {
+  color: #111827;
+}
+
+:host ::ng-deep .p-multiselect-label.p-placeholder {
+  color: #9ca3af;
+  font-size: 0.9rem;
+}
+
+/* === PrimeNG v19 multiselect base === */
+:host ::ng-deep .p-multiselect {
+  min-height: 44px;
+  border-radius: 8px;
+  border: 1px solid #d1d5db;
+  background-color: #ffffff;
+  display: flex;
+  align-items: center;
+  padding: 0;
+}
+
+:host ::ng-deep .p-multiselect-label {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  padding: 0.35rem 0.6rem;
+}
+
+/* === Chips (Prime v19 style) === */
+:host ::ng-deep .p-multiselect-token {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+
+  padding: 0.15rem 0.55rem;
+  border-radius: 9999px;
+
+  background-color: #f3f4f6; /* gray-100 */
+  color: #374151;            /* gray-700 */
+
+  font-size: 0.8rem;
+  font-weight: 500;
+  line-height: 1.2;
+
+  border: 1px solid #e5e7eb;
+}
+
+/* Chip remove icon */
+:host ::ng-deep .p-multiselect-token-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 0.7rem;
+  width: 14px;
+  height: 14px;
+
+  border-radius: 50%;
+  color: #6b7280;
+  cursor: pointer;
+
+  transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+:host ::ng-deep .p-multiselect-token-icon:hover {
+  background-color: #e5e7eb;
+  color: #111827;
+}
+
+:host ::ng-deep .p-multiselect-label.p-placeholder {
+  color: #9ca3af;
+  font-size: 0.9rem;
+}
+
+/* Filter input container */
+:host ::ng-deep .p-multiselect-header {
+  padding: 0.5rem;
+}
+
+/* Search input */
+:host ::ng-deep .p-multiselect-header .p-inputtext {
+  width: 100%;
+  border-radius: 8px;
+  padding: 0.45rem 0.75rem 0.45rem 2rem;
+  font-size: 0.9rem;
+}
+
+/* Checkbox alignement */
+:host ::ng-deep .p-multiselect-item {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+/* Checkbox */
+:host ::ng-deep .p-checkbox {
+  width: 16px;
+  height: 16px;
+}
+
+
+:host ::ng-deep .p-multiselect-token-icon {
+  width: 14px;
+  height: 14px;
+  font-size: 0.7rem;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 50%;
+  color: #6b7280;
+  cursor: pointer;
+}
+
+:host ::ng-deep .p-multiselect-token-icon:hover {
+  background-color: #e5e7eb;
+  color: #111827;
+}
+
+:host ::ng-deep .p-multiselect-token {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+
+  padding: 0.15rem 0.55rem;
+  border-radius: 9999px;
+
+  background-color: #f3f4f6;
+  color: #374151;
+
+  font-size: 0.8rem;
+  font-weight: 500;
+  line-height: 1.2;
+
+  border: 1px solid #e5e7eb;
+}
+
+/* === Chips container === */
+:host ::ng-deep .p-multiselect-label {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  padding: 0.35rem 0.6rem;
+}
+
+/* === PrimeNG v19 multiselect base === */
+:host ::ng-deep .p-multiselect {
+  min-height: 44px;
+  border-radius: 8px;
+  border: 1px solid #d1d5db;
+  background-color: #ffffff;
+}
+
+/* =========================
+   MULTISELECT – SEARCH BAR
+========================= */
+
+/* Header container */
+:host ::ng-deep .p-multiselect-header {
+  position: relative;
+  padding: 0.6rem;
+}
+
+/* Search input */
+:host ::ng-deep .p-multiselect-header .p-inputtext {
+  width: 100%;
+
+  padding: 0.55rem 0.75rem 0.55rem 2.2rem; /* space for icon */
+  font-size: 0.9rem;
+
+  border-radius: 8px;
+  border: 1px solid #d1d5db;
+  background-color: #ffffff;
+
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+/* Focus state */
+:host ::ng-deep .p-multiselect-header .p-inputtext:focus {
+  outline: none;
+  border-color: #0d9488;
+  box-shadow: 0 0 0 2px rgba(13, 148, 136, 0.15);
+}
+
+/* Placeholder */
+:host ::ng-deep .p-multiselect-header .p-inputtext::placeholder {
+  color: #9ca3af;
+  font-size: 0.85rem;
+}
+
+/* ❌ Supprimer le clear icon (X) du MultiSelect */
+:host ::ng-deep .p-multiselect-clear-icon {
+  display: none !important;
+}
+
+
+/* ✅ Reprendre l’espace laissé par l’icône */
+:host ::ng-deep
+.p-multiselect-panel
+.p-iconfield {
+  padding-left: 0 !important;
+}
+
+:host ::ng-deep
+.p-multiselect-header
+.p-inputtext {
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  padding: 0.45rem 0.75rem;
+  font-size: 0.9rem;
+  color: #374151;
+  background-color: #ffffff;
+}
+
+:host ::ng-deep
+.p-multiselect-header
+.p-inputtext:focus {
+  border-color: #0d9488;
+  box-shadow: 0 0 0 2px rgba(13,148,136,.2);
+}
+
+:host ::ng-deep .p-select {
+  min-height: 44px;
+  border-radius: 8px;
+  border: 1px solid #d1d5db;
+  background-color: #ffffff;
+  display: flex;
+  align-items: center;
+}
+
+
+:host ::ng-deep .p-select-label {
+  display: flex;
+  align-items: center;
+  height: 100%;
+  padding: 0 0.75rem;
+  font-size: 0.95rem;
+  color: #374151;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+:host ::ng-deep .p-select-label.p-placeholder {
+  color: #9ca3af;
+}
+
+:host ::ng-deep .p-select:focus-within {
+  border-color: #0d9488;
+  box-shadow: 0 0 0 2px rgba(13,148,136,0.25);
+}
+
+:host ::ng-deep .p-select-panel {
+  background-color: #f9fafb;
+  border-radius: 12px;
+  border: 1px solid #d1d5db;
+  box-shadow: 0 12px 28px rgba(0,0,0,0.12);
+  padding: 0.4rem 0;
+  animation: overlayFadeIn 0.18s ease-out;
+}
+:host ::ng-deep .p-select-header {
+  padding: 0.6rem;
+}
+
+:host ::ng-deep .p-select-header .p-inputtext {
+  width: 100%;
+  padding: 0.55rem 0.75rem;
+  font-size: 0.9rem;
+
+  border-radius: 8px;
+  border: 1px solid #d1d5db;
+  background-color: #ffffff;
+
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+:host ::ng-deep .p-select-header .p-inputtext:focus {
+  outline: none;
+  border-color: #0d9488;
+  box-shadow: 0 0 0 2px rgba(13,148,136,0.15);
+}
+
+:host ::ng-deep .p-select-clear-icon {
+  display: none !important;
+}
+
+:host ::ng-deep .p-select-item {
+  padding: 0.55rem 1rem;
+  font-size: 0.95rem;
+  color: #374151;
+  border-radius: 8px;
+  margin: 2px 6px;
+  transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+:host ::ng-deep .p-select-item:hover {
+  background-color: #e0f2f1;
+  color: #0f766e;
+}
+
+:host ::ng-deep .p-select-item.p-highlight {
+  background-color: #0d9488 !important;
+  color: #ffffff !important;
+  font-weight: 600;
+}
+
+:host ::ng-deep .p-select-list-container {
+  padding: 0.4rem 0.85rem;   /* ↓ moins haut, plus compact */
+  color: #374151;
+  border-radius: 8px;
+  margin: 2px 6px;
+
+  transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+:host ::ng-deep .p-select-items-wrapper {
+  padding: 0.25rem 0;  /* espace haut/bas */
+  max-height: 240px;   /* un peu plus compact */
+}
+
+:host ::ng-deep .p-select-item:hover {
+  background-color: #e0f2f1;
+  color: #0f766e;
+}
+
+:host ::ng-deep .p-select-item.p-highlight {
+  background-color: #0d9488 !important;
+  color: #ffffff !important;
+  font-weight: 600;
+}
+
+:host ::ng-deep .p-select-header .p-inputtext {
+  font-size: 0.85rem;
+  padding: 0.45rem 0.65rem;
+}
+
+/* =========================
+   LF ICON BUTTONS (match morpho)
+========================= */
+
+.lf-icon-btn {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.lf-icon-btn .pi {
+  font-size: 0.9rem;
+}
+
+/* Hover consistency */
+:host ::ng-deep .p-button-text.lf-icon-btn:hover {
+  background-color: rgba(13, 148, 136, 0.08);
+}
+
+/* Danger hover (trash) */
+:host ::ng-deep .p-button-danger.lf-icon-btn:hover {
+  background-color: rgba(220, 38, 38, 0.12);
+}
+
+
+.lf-groups {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 18px;
+}
+
+.lf-group-card {
+  background: #ffffff;
+  border-radius: 14px;
+  padding: 16px;
+  min-width: 240px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.lf-group-header {
+  font-weight: 700;
+  font-size: 1rem;
+  color: #0d9488;
+  padding-bottom: 6px;
+  border-bottom: 2px solid #e0f2f1;
+}
+
+.lf-values {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.lf-value-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 6px 10px;
+  border-radius: 8px;
+  background: #f8fafc;
+  font-size: 0.9rem;
+}
+
+.add-value-btn {
+  align-self: flex-start;
+  font-size: 0.85rem;
+}
+
+.lf-top-action {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 12px;
+}
+
+.add-function-btn {
+  border-radius: 9999px;
+  padding: 0.5rem 1.2rem;
+  font-weight: 600;
+}
+
+:host ::ng-deep .add-function-btn.p-button {
+  background-color: #ffffff;
+  color: #0d9488;
+  border: 1.5px solid #0d9488;
+}
+
+:host ::ng-deep .add-function-btn.p-button:hover {
+  background-color: #ecfdf5;
+}
+
+/* ===== Add Function centered with lines ===== */
+
+.lf-add-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin: 20px 0;
+}
+
+.lf-line {
+  flex: 1;
+  height: 1px;
+  background-color: #e5e7eb;
+}
+
+/* Button style */
+:host ::ng-deep .lf-add-btn.p-button {
+  background-color: #ffffff;
+  color: #0d9488;
+  border: 1.5px solid #d1d5db;
+  border-radius: 12px;
+  padding: 0.6rem 1.4rem;
+  font-weight: 600;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+}
+
+:host ::ng-deep .lf-add-btn.p-button:hover {
+  background-color: #f0fdfa;
+  border-color: #0d9488;
+}
+
+:host ::ng-deep .lf-add-btn .pi {
+  margin-right: 0.5rem;
+}
+
+.lf-group-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: linear-gradient(135deg, #0d9488, #14b8a6);
+  color: #ffffff;
+
+  font-weight: 700;
+  font-size: 0.95rem;
+  letter-spacing: 0.04em;
+
+  padding: 10px 12px;
+  border-radius: 10px;
+
+  text-align: center;
+}
+
+.lf-loader {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 220px;
+}
+
+:host ::ng-deep .custom-spinner svg {
+  width: 50px;
+  height: 50px;
+}
+
+.lf-skeleton-wrapper {
+  display: flex;
+  gap: 20px;
+}
+
+.lf-skeleton-card {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+
+/* Dialog */
+:host ::ng-deep .lf-dialog .p-dialog-content {
+  padding: 1.2rem;
+}
+
+.lf-dialog-search {
+  margin-bottom: 1rem;
+}
+
+.lf-dialog-list {
+  max-height: 350px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.lf-dialog-item {
+  padding: 10px 12px;
+  border-radius: 10px;
+  background: #f8fafc;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.lf-dialog-item:hover {
+  background: #e0f2f1;
+}
+
+.lf-dialog-item.selected {
+  background: #0d9488;
+  color: white;
+}
+
+.lf-name {
+  font-weight: 600;
+}
+
+.lf-type {
+  font-size: 0.8rem;
+  opacity: 0.7;
+}
+
+/* Overlay container */
+:host ::ng-deep .lf-overlay {
+  width: 420px;
+  border-radius: 14px;
+  padding: 1rem;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+}
+
+/* Search */
+.lf-overlay-search {
+  margin-bottom: 12px;
+}
+
+/* List */
+.lf-overlay-list {
+  max-height: 300px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+/* Item */
+.lf-overlay-item {
+  padding: 10px 12px;
+  border-radius: 10px;
+  background: #f8fafc;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.lf-overlay-item:hover {
+  background: #e0f2f1;
+}
+
+.lf-overlay-item.selected {
+  background: #0d9488;
+  color: white;
+}
+
+/* Title */
+.lf-overlay-title {
+  font-weight: 600;
+}
+
+/* URI */
+.lf-overlay-uri {
+  font-size: 0.75rem;
+  opacity: 0.6;
+  word-break: break-all;
+}
+
+/* Footer */
+.lf-overlay-footer {
+  margin-top: 12px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.lf-overlay {
+  z-index: 11000 !important;
+}
+
+.p-overlaypanel {
+  pointer-events: auto !important;
+}
+
+.lf-overlay-item {
+  pointer-events: auto !important;
+  position: relative;
+  z-index: 1;
+}
+
+.lf-overlay-list {
+  pointer-events: auto !important;
+}
+
+/* =========================
+   ADD VALUE MODE
+========================= */
+
+.lf-add-mode {
+  margin-top: 10px;
+  padding: 14px;
+  border-radius: 12px;
+  background: #f8fafc;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  animation: fadeInScale 0.18s ease-out;
+}
+
+/* Dropdown */
+:host ::ng-deep .lf-sense-dropdown {
+  width: 100%;
+}
+
+/* Buttons container */
+.lf-add-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+/* Confirm button */
+:host ::ng-deep .lf-confirm-btn.p-button {
+  background-color: #0d9488;
+  border-color: #0d9488;
+  font-weight: 600;
+  border-radius: 8px;
+}
+
+:host ::ng-deep .lf-confirm-btn.p-button:hover {
+  background-color: #0f766e;
+  border-color: #0f766e;
+}
+
+/* Cancel button */
+:host ::ng-deep .lf-cancel-btn.p-button {
+  color: #6b7280;
+}
+
+:host ::ng-deep .lf-cancel-btn.p-button:hover {
+  background-color: rgba(107,114,128,0.08);
+}
+
+
+/* =========================
+   LF DRAWER STYLE
+========================= */
+
+:host ::ng-deep .lf-drawer {
+  width: 420px !important;
+  height: 100vh !important;
+  margin: 0 !important;
+  border-radius: 0 !important;
+}
+
+:host ::ng-deep .lf-drawer .p-dialog-content {
+  padding: 24px;
+}
+
+
+.lf-drawer-content {
+  margin-top: 10px;
+}
+
+/* =========================
+   LF DRAWER
+========================= */
+
+:host ::ng-deep .lf-drawer {
+  width: 420px !important;
+  height: 100vh !important;
+  margin: 0 !important;
+  border-radius: 0 !important;
+}
+
+:host ::ng-deep .lf-drawer .p-dialog-content {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.lf-drawer-search {
+  width: 100%;
+  margin-bottom: 14px;
+}
+
+.lf-drawer-list {
+  flex: 1;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.lf-drawer-item {
+  padding: 10px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.15s ease;
+}
+
+.lf-drawer-item:hover {
+  background-color: #e0f2f1;
+}
+
+/* =========================
+   FULLSCREEN MASK STYLE
+========================= */
+
+:host ::ng-deep .p-dialog-mask {
+  background: rgba(15, 23, 42, 0.55) !important;
+  backdrop-filter: blur(4px);
+}
+
+/* =========================
+   DRAWER CONTAINER
+========================= */
+
+:host ::ng-deep .lf-drawer {
+  width: 480px !important;
+  height: 100vh !important;
+  margin: 0 !important;
+  border-radius: 0 !important;
+  box-shadow: -10px 0 30px rgba(0,0,0,0.15);
+  animation: slideInDrawer 0.25s ease-out;
+}
+
+/* Remove dialog rounded border */
+:host ::ng-deep .lf-drawer .p-dialog-header,
+:host ::ng-deep .lf-drawer .p-dialog-content {
+  border-radius: 0 !important;
+}
+
+/* =========================
+   DRAWER CONTENT
+========================= */
+
+:host ::ng-deep .lf-drawer .p-dialog-content {
+  padding: 36px 32px;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.lf-drawer-header {
+  font-size: 1.35rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  color: #0f172a;
+  padding : 10px;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.lf-drawer-search {
+  width: 100%;
+  margin-bottom: 22px;
+
+  padding: 12px 14px;
+  font-size: 0.95rem;
+
+  border-radius: 12px;
+  border: 1px solid #d1d5db;
+  background-color: #ffffff;
+
+  transition: all 0.2s ease;
+}
+
+.lf-drawer-search:focus {
+  outline: none;
+  border-color: #0d9488;
+  box-shadow: 0 0 0 3px rgba(13,148,136,0.15);
+}
+
+
+/* List */
+.lf-drawer-list {
+  flex: 1;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding-right: 6px;
+}
+
+.lf-drawer-item {
+  padding: 14px 18px;
+  border-radius: 12px;
+
+  font-size: 0.95rem;
+  font-weight: 500;
+
+  cursor: pointer;
+  transition: all 0.18s ease;
+
+  border: 1px solid transparent;
+}
+
+.lf-drawer-item:hover {
+  background-color: #ecfdf5;
+  border-color: #0d9488;
+  transform: translateX(6px);
+}
+
+/* =========================
+   SLIDE ANIMATION
+========================= */
+
+@keyframes slideInDrawer {
+  from {
+    transform: translateX(100%);
+    opacity: 0.6;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+:host ::ng-deep .p-dialog-mask {
+  background: rgba(2, 6, 23, 0.6) !important;
+  backdrop-filter: blur(6px);
+}
+
+:host ::ng-deep .lf-drawer {
+  background: linear-gradient(
+    to bottom,
+    #ffffff,
+    #f8fafc
+  );
+}
+
+.lf-drawer-section-label {
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #64748b;
+  margin-bottom: 12px;
+}
+
+.lf-drawer-count {
+  font-size: 0.8rem;
+  color: #94a3b8;
+  margin-bottom: 16px;
+}
+
+/* Item */
+.lf-drawer-item {
+  padding: 14px 18px;
+  border-radius: 12px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: all 0.18s ease;
+  border: 1px solid transparent;
+  position: relative;
+}
+
+/* Left accent bar on hover */
+.lf-drawer-item::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 20%;
+  height: 60%;
+  width: 4px;
+  border-radius: 4px;
+  background-color: transparent;
+  transition: background-color 0.18s ease;
+}
+
+.lf-drawer-item:hover {
+  background-color: #ecfdf5;
+  border-color: #0d9488;
+  transform: translateX(6px);
+}
+
+.lf-drawer-item:hover::before {
+  background-color: #0d9488;
+}
+
+.lf-drawer-list::-webkit-scrollbar {
+  width: 6px;
+}
+
+.lf-drawer-list::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.lf-drawer-list::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 8px;
+}
+
+.lf-drawer-list::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+/* =========================
+   PREMIUM LF DRAWER
+========================= */
+
+:host ::ng-deep .lf-drawer {
+  width: 520px !important;
+  height: 100vh !important;
+  margin: 0 !important;
+
+  border-top-left-radius: 22px !important;
+  border-bottom-left-radius: 22px !important;
+
+  background: linear-gradient(
+    180deg,
+    #ffffff 0%,
+    #f8fafc 100%
+  );
+
+  box-shadow:
+    -18px 0 40px rgba(0, 0, 0, 0.18),
+    -4px 0 12px rgba(0, 0, 0, 0.08);
+
+  animation: slideInDrawer 0.28s cubic-bezier(.22,.61,.36,1);
+}
+
+/* Mask (glass blur effect) */
+:host ::ng-deep .p-dialog-mask {
+  background: rgba(2, 6, 23, 0.55) !important;
+  backdrop-filter: blur(10px);
+}
+
+/* Header */
+.lf-drawer-header {
+  font-size: 1.4rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+
+
+  background: linear-gradient(90deg, #0d9488, #14b8a6);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Content */
+:host ::ng-deep .lf-drawer .p-dialog-content {
+  padding: 10px 36px;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+/* Search */
+.lf-drawer-search {
+  width: 100%;
+  margin-bottom: 16px;
+
+  padding: 14px 16px;
+  font-size: 0.95rem;
+
+  border-radius: 14px;
+  border: 1px solid #e2e8f0;
+  background-color: #ffffff;
+
+  transition: all 0.2s ease;
+}
+
+.lf-drawer-search:focus {
+  outline: none;
+  border-color: #0d9488;
+  box-shadow: 0 0 0 4px rgba(13,148,136,0.12);
+}
+
+/* Count */
+.lf-drawer-count {
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: #64748b;
+  margin-bottom: 20px;
+}
+
+/* Section label */
+.lf-drawer-section-label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: #94a3b8;
+  margin-bottom: 14px;
+}
+
+/* List */
+.lf-drawer-list {
+  flex: 1;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding-right: 6px;
+}
+
+/* Item */
+.lf-drawer-item {
+  padding: 16px 20px;
+  border-radius: 16px;
+
+  font-size: 0.95rem;
+  font-weight: 500;
+
+  cursor: pointer;
+  transition: all 0.2s ease;
+
+  border: 1px solid transparent;
+  position: relative;
+}
+
+/* Subtle hover elevation */
+.lf-drawer-item:hover {
+  background-color: #ecfdf5;
+  border-color: #0d9488;
+  transform: translateX(8px);
+  box-shadow: 0 6px 18px rgba(13,148,136,0.15);
+}
+
+/* Accent bar */
+.lf-drawer-item::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 22%;
+  height: 56%;
+  width: 4px;
+  border-radius: 4px;
+  background-color: transparent;
+  transition: background-color 0.2s ease;
+}
+
+.lf-drawer-item:hover::before {
+  background-color: #0d9488;
+}
+
+/* Scrollbar */
+.lf-drawer-list::-webkit-scrollbar {
+  width: 6px;
+}
+
+.lf-drawer-list::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 8px;
+}
+
+.lf-editor{
+
+  display:flex;
+
+  width:100%;
+
+
+  overflow:hidden;
+  border:1px solid #e5e7eb;
+
+  border-radius:16px;
+
+  box-shadow:0 6px 18px rgba(0,0,0,0.05);
+
+}
+
+/* LEFT PANEL */
+
+.lf-left{
+
+  width:240px;
+
+  padding:18px;
+
+  background:#f8fafc;
+
+  /*border-radius:12px;*/
+
+  border-left:1px solid #f1f5f9;
+
+
+}
+
+.lf-left-header{
+  font-size:0.95rem;
+  text-transform:uppercase;
+  letter-spacing:0.08em;
+  color:#334155;
+  font-weight:600;
+  margin-bottom:12px;
+  padding-bottom:8px;
+
+  border-bottom:1px solid #e5e7eb;
+}
+
+.lf-list{
+  display:flex;
+  flex-direction:column;
+  gap:6px;
+
+  flex: 1;
+  overflow-y: auto;
+  min-height: 0;
+
+  padding-right: 4px;
+}
+
+.lf-add-function-wrapper {
+  flex-shrink: 0;   /* 🔥 stays fixed at bottom */
+}
+
+.lf-list::-webkit-scrollbar {
+  width: 6px;
+}
+
+.lf-list::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 6px;
+}
+
+.lf-list::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+.lf-item{
+
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+
+  padding: 10px 12px 10px 0;
+
+  border-radius:10px;
+
+  font-size:0.9rem;
+
+  cursor:pointer;
+
+  transition:all .15s ease;
+
+}
+
+.lf-item:hover{
+  background:#eef2f7;
+}
+
+.lf-item.active{
+
+  background:#0d9488;
+  color:white;
+
+}
+
+
+/* RIGHT PANEL */
+
+.lf-right{
+
+  flex:1;
+
+  display:flex;
+  flex-direction:column;
+
+  background:#ffffff;
+
+  padding:22px;
+
+  min-height: 0;
+}
+
+.lf-right-title{
+
+  font-size:1.1rem;
+  font-weight:600;
+
+  color:#1f2937;
+
+  padding-bottom:10px;
+
+  border-bottom:1px solid #e5e7eb;
+
+}
+
+.lf-sense-list{
+  display:flex;
+  flex-direction:column;
+  gap:6px;
+}
+
+.lf-sense-row{
+  display:flex;
+  justify-content:space-between;
+
+  padding:10px;
+  border-radius:8px;
+  background:#f8fafc;
+}
+
+.lf-add-panel{
+  margin-top:20px;
+}
+
+.lf-sense-details{
+  margin-top:20px;
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+}
+
+.lf-add-function{
+  margin-top:16px;
+  width:100%;
+}
+
+.lf-group{
+  display:flex;
+  flex-direction:column;
+}
+
+.lf-item-actions{
+  display:flex;
+  gap:6px;
+}
+
+.lf-sublist{
+  padding-left:14px;
+  margin-top:4px;
+  display:flex;
+  flex-direction:column;
+  gap:4px;
+}
+
+.lf-subitem{
+
+  display:flex;
+  justify-content:space-between;
+
+  padding:8px 10px;
+
+  border-radius:8px;
+
+  font-size:0.85rem;
+
+  background:#ffffff;
+
+  border:1px solid #f1f5f9;
+
+}
+
+.lf-subitem:hover{
+  background:#f8fafc;
+}
+
+.lf-collapse-btn{
+  width:26px;
+  height:26px;
+}
+
+.lf-field{
+  display:flex;
+  flex-direction:column;
+  gap:6px;
+}
+
+.lf-field label{
+  font-size:0.8rem;
+  font-weight:600;
+  color:#64748b;
+}
+
+.lf-field textarea{
+  width:100%;
+
+  border-radius:10px;
+  border:1px solid #d1d5db;
+
+  padding:10px 12px;
+
+  font-family:"Libre Baskerville", serif;
+  font-size:0.9rem;
+
+  background:#f8fafc;
+
+  resize:none;
+}
+
+.lf-editor{
+  animation:fadeInScale .18s ease-out;
+}
+
+
+.lf-subitem.active {
+  background: #e0f2f1;
+  border-color: #0d9488;
+}
+
+.lf-empty {
+  margin-top: 20px;
+  font-size: 0.9rem;
+  color: #94a3b8;
+}
+
+.lf-editor {
+  display: flex;
+  width: 100%;
+
+  border-radius: 18px;
+
+  background: linear-gradient(
+    180deg,
+    #ffffff 0%,
+    #f8fafc 100%
+  );
+
+  border: 1px solid rgba(255,255,255,0.6);
+
+  box-shadow:
+    0 10px 30px rgba(0,0,0,0.08),
+    inset 0 1px 0 rgba(255,255,255,0.6);
+
+  overflow: hidden;
+
+  backdrop-filter: blur(6px);
+
+  height: 100%;
+  min-height: 0;
+}
+
+.lf-left {
+
+
+  background: linear-gradient(
+    180deg,
+    #f8fafc,
+    #f1f5f9
+  );
+
+  border-right: 1px solid #e2e8f0;
+
+  display: flex;
+  flex-direction: column;
+
+  min-height: 0;
+
+}
+
+
+.lf-subitem {
+  display: flex;
+  justify-content: space-between;
+
+  padding: 10px 12px;
+
+  border-radius: 10px;
+
+  background: #ffffff;
+
+  border: 1px solid #e2e8f0;
+
+  transition: all 0.18s ease;
+}
+
+.lf-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.lf-field label {
+  font-size: 0.75rem;
+  font-weight: 600;
+
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+
+  color: #94a3b8;
+}
+
+.lf-field textarea,
+.lf-readonly {
+  border-radius: 12px;
+
+  border: 1px solid #e2e8f0;
+
+  padding: 12px 14px;
+
+  background: #f8fafc;
+
+  transition: all 0.2s ease;
+}
+
+.lf-field textarea:focus {
+  outline: none;
+
+  border-color: #0d9488;
+
+  box-shadow: 0 0 0 3px rgba(13,148,136,0.12);
+}
+
+:host ::ng-deep .lf-add-function.p-button {
+  border-radius: 14px;
+
+  background: linear-gradient(135deg, #0d9488, #14b8a6);
+  border: none;
+
+  color: white;
+  font-weight: 600;
+
+  box-shadow: 0 8px 20px rgba(13,148,136,0.35);
+
+  transition: all 0.2s ease;
+
+  padding: 5px;
+}
+
+:host ::ng-deep .lf-add-function.p-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 26px rgba(13,148,136,0.4);
+}
+
+.lf-sublist {
+  animation: fadeInSlide 0.2s ease;
+}
+
+@keyframes fadeInSlide {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.lf-field textarea {
+  font-size: 1.35rem;
+  line-height: 1.7;
+
+  font-family: "Libre Baskerville", serif;
+
+  color: #1f2937;
+
+  background: #f9fafb;
+
+  border-radius: 14px;
+
+  padding: 14px 16px;
+
+  border: 1px solid #e5e7eb;
+}
+
+.lf-right-content {
+  margin-top: 18px;
+
+  padding: 20px 22px;
+
+  border-radius: 16px;
+
+  background: linear-gradient(
+    180deg,
+    #ffffff,
+    #f8fafc
+  );
+
+  border: 1px solid #e2e8f0;
+
+  box-shadow:
+    0 8px 24px rgba(0,0,0,0.06),
+    inset 0 1px 0 rgba(255,255,255,0.6);
+
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.lf-item-label{
+  font-size: 1rem;
+}
+
+/* 🔥 FORCE CLICK INSIDE DRAWER */
+:host ::ng-deep .lf-drawer,
+:host ::ng-deep .lf-drawer * {
+  pointer-events: auto !important;
+}
+
+/* 🔥 ENSURE ITEMS ARE CLICKABLE */
+.lf-drawer-item {
+  pointer-events: auto !important;
+  position: relative;
+  z-index: 2;
+}
+
+/* 🔥 FIX PRIME MASK (CRITICAL) */
+:host ::ng-deep .p-dialog-mask {
+  pointer-events: auto !important;
+}
+
+/* 🔥 FIX CONTENT LAYER */
+:host ::ng-deep .lf-drawer .p-dialog-content {
+  position: relative;
+  z-index: 1;
+}
+
+.lf-definition-readonly {
+  width: 100%;
+  min-height: 120px;
+
+  padding: 14px 16px;
+
+  background: #f9fafb;
+  border: 1px solid #e5e7eb;
+  border-radius: 14px;
+
+  font-family: "Libre Baskerville", serif;
+  font-size: 1.35rem;
+  line-height: 1.7;
+  color: #1f2937;
+
+  box-sizing: border-box;
+}
+
+/* Liens présents dans les définitions */
+:host ::ng-deep .lf-definition-readonly a {
+  color: #0d9488;
+  text-decoration: none;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+:host ::ng-deep .lf-definition-readonly a:hover {
+  text-decoration: underline;
+}

@@ -14,6 +14,7 @@ export class DictEntry {
   revisionDate: string = '';
   type: string[] = [];
   seeAlso: Record<string, any> = {};
+  note: string ='';
   hasChildren: boolean = false;
 
   static fromJson(json: any): DictEntry {
@@ -37,6 +38,7 @@ export class DictEntry {
       revisionDate: this.revisionDate,
       type: [...this.type],
       seeAlso: this.seeAlso,
+      note: this.note,
       hasChildren: this.hasChildren,
     };
   }

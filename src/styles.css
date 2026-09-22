@@ -1,0 +1,276 @@
+@import "primeicons/primeicons.css";
+@import "tailwindcss";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+body{
+  font-family: roboto, sans-serif;
+  height: 100%;
+  /*background-color: rgb(206,219,220);*/
+  background: linear-gradient(
+    180deg,
+    #f4f6f9 0%,
+    #e9eef5 100%
+  );
+  margin: 0;
+  overflow: hidden;
+  min-height: 100vh;
+}
+
+.custom-tooltip {
+  background: #495057 !important; /* Tailwind gray-700 */
+  color: #f9fafb !important;       /* Tailwind gray-50 */
+  border: 1px solid #4b5563 !important; /* gray-600 */
+  border-radius: 8px;
+  padding: 1.1rem !important;
+  margin: 0.4rem !important;
+  max-width: 260px;
+  font-size: 1.1rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+
+}
+
+
+.p-tooltip .p-tooltip-arrow {
+  display: none !important;
+}
+
+main.main {
+  flex: 1 0 auto; /* grow but not overflow */
+  display: flex;
+  flex-direction: column;
+}
+
+.content {
+  display: flex;
+  flex: 1; /* Take available space */
+  overflow: hidden;
+}
+
+
+/* === PrimeNG Dialog/ConfirmDialog overlay mask (global) === */
+.p-dialog-mask.p-component-overlay {
+  background: rgba(17, 24, 39, 0.55);  /* slate-900 @ 55% */
+  backdrop-filter: blur(2px);
+}
+
+/* optional: make sure it appears above other overlays */
+.p-dialog-mask {
+  z-index: 1100; /* tweak if you use other overlays */
+}
+/* Strong, theme-beating override for ConfirmDialog content */
+.custom-confirm-dialog.p-confirm-dialog .p-dialog-content {
+  background: #f9fafb !important;
+  padding: 1rem 1.25rem !important;
+}
+/* === FIX Confirm Dialog background (global override) === */
+.p-confirmdialog.custom-confirm-dialog.p-dialog {
+  background: linear-gradient(180deg, #ffffff 0%, #f9fafb 100%) !important;
+  border-radius: 12px !important;
+  border: 1px solid #d1d5db !important;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.08) !important;
+}
+
+/* Header and footer consistent with your theme */
+.p-confirmdialog.custom-confirm-dialog .p-dialog-header {
+  background: #0d9488 !important;
+  color: #fff !important;
+  font-weight: 600 !important;
+  border: none !important;
+  padding: 0.85rem 1rem !important;
+}
+
+.p-confirmdialog.custom-confirm-dialog .p-dialog-content {
+  background: #f9fafb !important;
+  padding: 1rem 1.25rem !important;
+  color: #374151 !important;
+}
+
+.p-confirmdialog.custom-confirm-dialog .p-dialog-footer {
+  background: #f9fafb !important;
+  border-top: 1px solid #e5e7eb !important;
+  padding: 0.75rem 1rem !important;
+  display: flex !important;
+  justify-content: center !important;
+  gap: 1rem !important;
+}
+
+/* Buttons styling */
+.p-confirmdialog.custom-confirm-dialog .p-button-danger {
+  background: linear-gradient(145deg, #dc2626, #b91c1c) !important;
+  border: none !important;
+  border-radius: 8px !important;
+  padding: 0.55rem 1.25rem !important;
+  font-weight: 600 !important;
+  color: #fff !important;
+}
+.p-confirmdialog.custom-confirm-dialog .p-button:not(.p-button-danger) {
+  background: #e5e7eb !important;
+  color: #374151 !important;
+  border: none !important;
+  border-radius: 8px !important;
+  padding: 0.55rem 1.25rem !important;
+}
+
+/* Overlay dim background */
+.p-dialog-mask.p-component-overlay {
+  background-color: rgba(15, 23, 42, 0.45) !important;
+  animation: fadeIn .15s ease-in;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+/* ================================
+   PREMIUM PRIME NG TOAST
+   ================================ */
+
+.p-toast {
+  z-index: 10000 !important;
+}
+
+/* Base toast container */
+.p-toast-message {
+  position: relative;
+  border-radius: 14px !important;
+  padding: 0.75rem 1rem 0.75rem 1.25rem;
+  min-width: 280px;
+  max-width: 360px;
+  box-shadow:
+    0 12px 30px rgba(0,0,0,0.18),
+    inset 0 1px 0 rgba(255,255,255,0.35);
+  animation: toast-slide-in 0.35s cubic-bezier(.22,.61,.36,1);
+  overflow: hidden;
+  backdrop-filter: blur(6px);
+}
+
+/* Left accent bar */
+.p-toast-message::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 5px;
+  height: 100%;
+  border-radius: 14px 0 0 14px;
+}
+
+/* Typography */
+.p-toast-summary {
+  font-weight: 700;
+  font-size: 0.95rem;
+  margin-bottom: 0.15rem;
+}
+
+.p-toast-detail {
+  font-size: 0.85rem;
+  line-height: 1.35;
+  opacity: 0.95;
+}
+
+/* Icons */
+.p-toast-message-icon {
+  font-size: 1.35rem;
+  margin-right: 0.75rem;
+  opacity: 0.95;
+}
+
+/* ================================
+   VARIANTS
+   ================================ */
+
+/* SUCCESS */
+.p-toast-message-success {
+  background: rgb(28, 28, 28) !important;
+  color: #22C55E !important;
+}
+.p-toast-message-success::before {
+  background: rgb(28, 28, 28);
+}
+
+/* ERROR */
+.p-toast-message-error {
+  background: rgb(28, 28, 28) !important;
+  color: #ef4444 !important;
+}
+.p-toast-message-error::before {
+  background: rgb(28, 28, 28) !important;
+}
+
+/* WARNING */
+.p-toast-message-warn {
+  background: rgb(28, 28, 28) !important;
+  color: #FBBF24 !important;
+}
+.p-toast-message-warn::before {
+  background: rgb(28, 28, 28) !important;
+}
+
+/* INFO */
+.p-toast-message-info {
+  background: rgb(28, 28, 28) !important;
+  color: #3B82F6 !important;
+}
+.p-toast-message-info::before {
+  background: rgb(28, 28, 28) !important;
+}
+
+/* ================================
+   ANIMATION
+   ================================ */
+
+@keyframes toast-slide-in {
+  from {
+    opacity: 0;
+    transform: translateX(25px) scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+  }
+}
+
+/* ===============================
+   PRIME NG v19 – KILL SEARCH ICON
+   =============================== */
+
+/* 1️⃣ Supprimer le wrapper iconfield */
+.p-multiselect-panel .p-iconfield {
+  padding-left: 0 !important;
+}
+
+/* 3️⃣ Forcer input plein width */
+.p-multiselect-panel input.p-inputtext {
+  padding-left: 0.75rem !important;
+}
+
+.p-inputicon{
+  display: none !important;
+}
+
+
+html, body {
+  height: 100%;
+  margin: 0;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+}
+
+app-root {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+main.main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+

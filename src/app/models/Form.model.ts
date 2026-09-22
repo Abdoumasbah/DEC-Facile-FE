@@ -1,14 +1,16 @@
-import {IMorphology} from '../interfaces/forms.interface';
+import {Ilabel, IMorphologyTV} from '../interfaces/forms.interface';
 
 export class Form {
   creator: string = "";
   lastUpdate: string = "";
   creationDate: string = "";
   confidence: number = 0;
-  morphology: IMorphology[] = [];
-  inheritedMorphology: IMorphology[] = [];
+  morphology: IMorphologyTV[] = [];
+  inheritedMorphology: IMorphologyTV[] = [];
   type: string = "";
-  label: string = "";
+  label: Ilabel[] = [];
+  lexicalEntryLabel: string = "";
+  language: string = "";
   note: string = "";
   phoneticRep: string = "";
   form: string = "";
@@ -32,6 +34,8 @@ export class Form {
       inheritedMorphology: this.inheritedMorphology,
       type: this.type,
       label: this.label,
+      language: this.language,
+      lexicalEntryLabel: this.lexicalEntryLabel,
       note: this.note,
       phoneticRep: this.phoneticRep,
       form: this.form,

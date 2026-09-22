@@ -6,6 +6,8 @@ import {ISenseDetail} from '../interfaces/ISenseDetail.interface';
 import {map} from 'rxjs/operators';
 import {ILexicalFunctionSense} from '../interfaces/lexical_function_Sense.interface';
 import {LexicalFunctionModel} from '../models/Lexical_function_Sense.model';
+import {ECDMeaningModel} from '../models/ECDMeaningModel.model';
+import {IECDMeaning} from '../interfaces/IECDMeaning.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -17,6 +19,7 @@ export class SenseDetailService {
   private LF_URL = 'LexO-backend/service/ecd/data/ECDLexicaFunctions';
   private ADD_GR_URL = 'LexO-backend/service/update/genericRelation';
   private DELETE_GR_URL = 'LexO-backend/service/delete/relation';
+  private ECDMeaning_URL = 'LexO-backend/service/ecd/data/ECDMeaning';
   private http = inject(HttpClient);
 
   constructor() { }
@@ -45,34 +48,55 @@ export class SenseDetailService {
     );
   }
 
-  updateSenseDefinition(senseId: string, newDefinition: string, oldDefinition: string): Observable<any> {
-    if (!senseId) {
-      console.error("Error: senseId is missing!");
-      throw new Error("Missing senseId parameter!");
-    }
+  private normalizeHTMLForRDF(html: string): string {
+    return html.replace(/="/g, "='").replace(/"/g, "'");
+  }
 
-    // ✅ Ensure proper escaping of quotes
-    const escapedDefinition = newDefinition
-      .replace(/\\/g, '\\\\')  // Escape backslashes
-      .replace(/"/g, '\\"');   // Escape double quotes (important for JSON)
+  updateSenseDefinition(
+    senseId: string,
+    newDefinition: string,
+    oldDefinition: string
+  ): Observable<any> {
 
-    // ✅ Construct payload correctly
+    const safeHTML = this.normalizeHTMLForRDF(newDefinition);
+
     const updatePayload = {
       relation: "http://www.w3.org/2004/02/skos/core#definition",
-      value: escapedDefinition,  // Use properly escaped definition
+      value: safeHTML, // 🔥 HTML PUR
+      datatype: "http://www.w3.org/1999/02/22-rdf-syntax-ns#HTML",
       currentValue: oldDefinition
     };
 
-   // console.log("🚀 Sending payload:", JSON.stringify(updatePayload));  // Debugging
+    return this.http.post(
+      `${this.UPDATE_URL}?id=${encodeURIComponent(senseId)}`,
+      updatePayload,
+      {
+        headers: { 'Content-Type': 'application/json' },
+        responseType: 'text'
+      }
+    );
+  }
 
-    return this.http.post(`${this.UPDATE_URL}?id=${encodeURIComponent(senseId)}`, updatePayload, {
-      headers: { 'Content-Type': 'application/json' },
-      responseType: 'text'  // ✅ Expect plain text response instead of JSON
-    }).pipe(
-      map(response => {
-      //  console.log("✅ Server Response:", response);
-        return { success: true, message: response }; // Wrap text response in an object
-      })
+  updateSenseExample(senseId: string, newExample: string): Observable<any> {
+    if (!senseId) throw new Error("Missing senseId");
+
+    const normalized = newExample
+      .replace(/\r\n/g, '\n')   // Windows
+      .replace(/\r/g, '\n')     // old Mac
+      .replace(/\n/g, '\\n');   // 🔑 conversion contrôlée
+
+    const updatePayload = {
+      relation: "http://www.lexinfo.net/ontology/3.0/lexinfo#senseExample",
+      value: normalized
+    };
+
+    return this.http.post(
+      `${this.UPDATE_URL}?id=${encodeURIComponent(senseId)}`,
+      updatePayload,
+      {
+        headers: { 'Content-Type': 'application/json' },
+        responseType: 'text'
+      }
     );
   }
 
@@ -127,6 +151,13 @@ export class SenseDetailService {
         //  console.log("✅ Server Response:", response);
         return { success: true, message: response }; // Wrap text response in an object
       })
+    );
+  }
+
+  getBySenseId(senseId: string): Observable<ECDMeaningModel> {
+    const url = `${this.ECDMeaning_URL}?id=${encodeURIComponent(senseId)}`;
+    return this.http.get<IECDMeaning>(url).pipe(
+      map(data => ECDMeaningModel.fromJson(data))
     );
   }
 }

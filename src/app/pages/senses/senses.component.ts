@@ -1,18 +1,29 @@
-import {Component, computed, inject, Input, model} from '@angular/core';
+import {Component, computed, EventEmitter, inject, Input, model, Output, ViewChild} from '@angular/core';
 import {DictEntryService} from '../../services/dict-entry.service';
 import {toSignal} from '@angular/core/rxjs-interop';
 import {ECDEntryTreeService} from '../../services/ecdentry-tree.service';
 import {IECDEntryTree} from '../../interfaces/ECDEntryTree.interface';
+import {IForms} from '../../interfaces/forms.interface';
+import {DictEntryComponent} from '../../dict-entry/dict-entry.component';
+import {ECDForm} from '../../models/ECDForm.model';
 
 @Component({
   selector: 'app-senses',
   standalone: false,
   templateUrl: './senses.component.html',
-  styleUrl: './senses.component.scss'
+  styleUrl: './senses.component.css'
 })
 
 export class SensesComponent {
   selectedEntryId: string | null = null;
+  activeTab: 'Lexical Function' | 'Examples' | 'Pattern government' | null = 'Lexical Function';
+  displayPart:  'newD' | 'listD' | 'newDE' | 'viewDE'| 'updateD' | 'updateDE' | 'newLanguage' | 'newForm'| 'updateForm' | 'newSense' | 'Sense' | 'senseOrder' | null = null;
+  selectedViewEntryId: string | null = null;
+  dictEntryId: string | null = null;
+  viewForms: ECDForm[] = [];
+  viewSenses: IECDEntryTree[] = [];
+  selectedDictId!: string;
+
 
   constructor(private ecdEntryTreeService: ECDEntryTreeService) {
   }
@@ -22,6 +33,10 @@ export class SensesComponent {
   detailedEntry: IECDEntryTree[] | null = null;
 
   @Input() selectedLanguage: string = "";
+  @Output() entryCreated = new EventEmitter<void>();
+  @ViewChild(DictEntryComponent)
+  dictEntryComponent!: DictEntryComponent;
+
 
   search = model("");
   getECDEntries = computed(() => {
@@ -40,9 +55,39 @@ export class SensesComponent {
 
     return entries;
   });
+  leftPanelWidth = '30%'; // initial width
+
+  startResizing(event: MouseEvent) {
+    event.preventDefault();
+
+    const startX = event.clientX;
+    const startWidth = document.querySelector('.left-side')!.clientWidth;
+
+    const onMouseMove = (moveEvent: MouseEvent) => {
+      const newWidth = startWidth + (moveEvent.clientX - startX);
+      this.leftPanelWidth = `${newWidth}px`;
+    };
+
+    const onMouseUp = () => {
+      window.removeEventListener('mousemove', onMouseMove);
+      window.removeEventListener('mouseup', onMouseUp);
+    };
+
+    window.addEventListener('mousemove', onMouseMove);
+    window.addEventListener('mouseup', onMouseUp);
+  }
+
+  onEntryCreated(): void {
+    // option 1 : appeler directement la méthode
+    this.dictEntryComponent?.loadAllEntries();
+
+    // option 2 (recommandée) : passer par event
+    // this.displayPart = null;
+  }
 
   loadDictEntry(id: string) {
     if (this.selectedEntryId === id) {
+
       // Désélectionner si on clique sur le même élément
       this.selectedEntryId = null;
       this.detailedEntry = null;
@@ -77,6 +122,65 @@ export class SensesComponent {
     }
 
     return senses;
+  }
+
+  viewEntryDetails(id: string): void {
+    this.selectedViewEntryId = id;
+    this.displayPart = 'viewDE';
+
+    this.ecdEntryTreeService.getByIdForms(id).subscribe(forms => {
+      this.viewForms = forms;
+    });
+
+    this.ecdEntryTreeService.getByIdSense(id).subscribe(senses => {
+      this.viewSenses = this.flattenSenses(senses);
+    });
+  }
+  updateDictDetails(id: string): void {
+    this.selectedDictId = id;
+    this.displayPart = 'updateD';
+  }
+  updateEntryDetails(id: string): void {
+    this.selectedDictId = id;
+    this.displayPart = 'updateDE';
+  }
+
+  updateFormDetails(id: string): void {
+    this.selectedDictId = id;
+    this.displayPart = 'updateForm';
+  }
+
+  onEntryUpdated(): void {
+    // 🔄 reload left panel
+    this.dictEntryComponent?.loadAllEntries();
+  }
+  onFormUpdateRequested(event: { formId: string; dictEntryId: string }) {
+    this.dictEntryId = event.dictEntryId;
+    this.selectedDictId = event.formId;
+    this.displayPart = 'updateForm';
+  }
+
+
+  onFormCreate(): void {
+    // 🔄 reload left panel
+    this.dictEntryComponent?.loadForms();
+  }
+
+  openNewForm(id: string) {
+    this.dictEntryId = id;   // passed down to <app-new-form [dictEntryId]>
+    this.displayPart = 'newForm';
+  }
+
+  openNewSense(entryId: string) {
+    this.dictEntryId = entryId;
+
+    // 🔴 RESET displayPart avant
+    this.displayPart = null;
+
+    setTimeout(() => {
+      this.activeTab = 'Lexical Function';
+      this.displayPart = 'Sense';
+    });
   }
 
 

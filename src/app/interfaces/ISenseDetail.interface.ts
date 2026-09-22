@@ -20,6 +20,7 @@ export interface ISenseDetail {
   }>;
   note: string;
   concept: string;
+  language: string;
   description: string | null;
   explanation: string | null;
   gloss: string | null;

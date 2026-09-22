@@ -1,0 +1,148 @@
+<form [formGroup]="form" (ngSubmit)="saveUpdatedDict()" class="new-dict-wrapper">
+
+  <div class="new-dict-container">
+
+    <!-- LEFT PANEL -->
+    <div class="config-panel">
+
+      <div class="config-title">Dictionaries</div>
+
+      <div class="dict-scroll">
+
+        <div *ngFor="let d of dictionaries">
+
+          <!-- HEADER -->
+          <div
+            class="config-item dict-row"
+            [class.active]="selectedDictId === d.dictionary"
+            (click)="toggleDict(d)"
+          >
+
+            <div class="dict-left">
+              <i class="pi"
+                 [ngClass]="expandedDict === d.dictionary ? 'pi-angle-down' : 'pi-angle-right'">
+              </i>
+
+              <span class="dict-label">{{ d.label }}</span>
+            </div>
+
+            <i class="pi pi-trash delete-icon"
+               (click)="deleteDict(d.dictionary); $event.stopPropagation()">
+            </i>
+
+          </div>
+
+          <!-- SUBMENU -->
+          <div *ngIf="expandedDict === d.dictionary" class="dict-submenu">
+
+            <div
+              class="submenu-item"
+              [class.active]="selectedTab === 'general'"
+              (click)="selectTab('general'); $event.stopPropagation()">
+              General Information
+            </div>
+
+            <div
+              class="submenu-item"
+              [class.active]="selectedTab === 'linguistic'"
+              (click)="selectTab('linguistic'); $event.stopPropagation()">
+              Linguistic Metadata
+            </div>
+
+            <div
+              class="submenu-item"
+              [class.active]="selectedTab === 'advanced'"
+              (click)="selectTab('advanced'); $event.stopPropagation()">
+              Advanced Options
+            </div>
+
+          </div>
+
+        </div>
+
+        <div *ngIf="!dictionaries?.length" class="empty-left">
+          No dictionaries available
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- RIGHT PANEL -->
+    <div class="form-panel">
+
+      <ng-container *ngIf="selectedDictId; else emptyState">
+
+        <!-- GENERAL -->
+        <div *ngIf="selectedTab === 'general'">
+
+          <div class="form-header">
+            <div class="header-icon">
+              <i class="pi pi-book"></i>
+            </div>
+
+            <div>
+              <h2 class="">Update Dictionary</h2>
+              <p>Edit and manage your lexical resource</p>
+            </div>
+          </div>
+
+          <div class="form-body">
+
+            <div class="field">
+              <label>Label *</label>
+              <input type="text" formControlName="label" />
+            </div>
+
+            <div class="field">
+              <label>Language</label>
+              <input type="text" formControlName="language" readonly />
+            </div>
+
+            <div class="field">
+              <label>Description</label>
+              <textarea rows="4" formControlName="description"></textarea>
+            </div>
+
+          </div>
+
+          <div class="form-actions">
+            <button type="button" class="cancel-btn" (click)="resetForm()">
+              Cancel
+            </button>
+
+            <button type="submit" class="save-btn" [disabled]="form.invalid">
+              <i class="pi pi-check"></i> Update
+            </button>
+          </div>
+
+        </div>
+
+        <!-- OTHER TABS -->
+        <div *ngIf="selectedTab === 'linguistic'" class="tab-placeholder">
+          Linguistic Metadata (coming soon)
+        </div>
+
+        <div *ngIf="selectedTab === 'advanced'" class="tab-placeholder">
+          Advanced Options (coming soon)
+        </div>
+
+        <!-- NO TAB -->
+        <div *ngIf="!selectedTab" class="empty-state">
+          Select a section
+        </div>
+
+      </ng-container>
+
+      <ng-template #emptyState>
+        <div class="empty-state">
+          <i class="pi pi-book"></i>
+          <p>Select a dictionary</p>
+        </div>
+      </ng-template>
+
+    </div>
+
+  </div>
+
+</form>
