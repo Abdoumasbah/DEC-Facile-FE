@@ -86,6 +86,13 @@ export class DefinitionComponent {
 
   ngOnInit() {
 
+    // NB: inizializzare qui i form, PRIMA delle subscribe: i subject in
+    // SelectedSenseService sono BehaviorSubject e rigiocano il valore corrente
+    // in modo sincrono, quindi gli handler possono girare prima della fine di ngOnInit.
+    this.posForm = this.fb.group({
+      pos: ['']
+    });
+
     this.selectedSenseService.entryId$
       .subscribe(id => {
 
@@ -169,11 +176,6 @@ export class DefinitionComponent {
       }
     });
 
-
-    this.posForm = this.fb.group({
-      pos: ['']
-    });
-
   }
 
   enableEditing() {
@@ -187,6 +189,13 @@ export class DefinitionComponent {
   }
 
   private renderDefinitionAsDOM(definition: string) {
+    if (!this.descriptionField) {
+      // ViewChild non ancora risolto (static: false): selectedSense$ è una
+      // BehaviorSubject e può emettere durante ngOnInit, prima di ngAfterViewInit.
+      // Riprovo al tick successivo, quando il riferimento è disponibile.
+      setTimeout(() => this.renderDefinitionAsDOM(definition), 0);
+      return;
+    }
     const container = this.descriptionField.nativeElement;
     container.innerHTML = ''; // reset
 
